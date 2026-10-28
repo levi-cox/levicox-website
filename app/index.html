@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Levi Cox Fitness App | Train the plan. Log every set.</title>
+<meta name="description" content="Structured training programs from Levi Cox with every set, rep and weight logged in one app. Free to start.">
+<meta name="theme-color" content="#111111">
+<meta property="og:title" content="Levi Cox Fitness App">
+<meta property="og:description" content="Train the plan. Log every set. Structured programs from Levi Cox, free to start.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://levicox.com/app/shots/home.jpg">
+<link rel="icon" href="../favicon.ico" sizes="48x48">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: dark, phone-led single column on mobile; text and phone side by side from 880px.
+   Colours and fonts are the app's own: near-black, orange, Archivo for display, Inter for everything else.
+   Type roles (one style per role, used everywhere):
+   display  Archivo 800, uppercase  -> h1, h2, h3, prices
+   wordmark Archivo 700, tracked    -> brand name in the nav
+   body     Inter 400               -> paragraphs, lede, lists, FAQ answers
+   question Inter 600               -> FAQ questions
+   label    Inter 600, 13px         -> chips, tags, meta, floating badges
+   button   Inter 700, uppercase    -> all buttons */
+:root {
+  --bg: #111111;
+  --surface: #1B1B1B;
+  --surface-2: #262626;
+  --line: #2D2D2D;
+  --fg: #F3F0EA;
+  --muted: #A19F9A;
+  --accent: #FF5A1F;
+  --on-accent: #111111;
+
+  --font-display: "Archivo", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --fs-h1: clamp(40px, 10.4vw, 96px);
+  --fs-h2: clamp(32px, 7.4vw, 64px);
+  --fs-h3: clamp(20px, 4.4vw, 26px);
+  --fs-price: clamp(32px, 6vw, 40px);
+  --fs-lede: clamp(17px, 2.4vw, 20px);
+  --fs-body: 16px;
+  --fs-small: 14px;
+  --fs-label: 13px;
+
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font: 400 var(--fs-body)/1.6 var(--font-body);
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+  margin: 0;
+  -webkit-text-size-adjust: 100%;
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+p, ul, ol { margin: 0; }
+
+.wrap {
+  max-width: 1120px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(72px, 12vw, 140px);
+  padding-block: 20px 40px;
+}
+
+/* display type */
+h1, h2, h3, .mega {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  line-height: 1;
+  margin: 0;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); line-height: 1.1; }
+.accent { color: var(--accent); display: block; }
+
+/* body type */
+.lede { color: var(--muted); font-size: var(--fs-lede); max-width: 46ch; }
+.card-text p, .step p, .pcard p, .plan ul, .qa p { color: var(--muted); font-size: var(--fs-body); }
+.note, .foot-bar { color: var(--muted); font-size: var(--fs-small); }
+
+/* labels: chips, tags, meta, badges */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+.chips li, .tag, .float {
+  font: 600 var(--fs-label)/1.3 var(--font-body);
+}
+.chips li { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 9px 16px; }
+.tag { padding: 6px 12px; border-radius: 999px; background: var(--surface-2); white-space: nowrap; }
+.tag.o { background: var(--accent); color: var(--on-accent); }
+.meta { display: flex; flex-wrap: wrap; gap: 4px 16px; color: var(--muted); font: 600 var(--fs-label)/1.4 var(--font-body); }
+
+/* buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 52px; padding: 0 28px;
+  border-radius: 12px; border: 0;
+  background: var(--accent); color: var(--on-accent);
+  font: 700 14px/1 var(--font-body);
+  letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none;
+  transition: transform .12s ease, filter .12s ease;
+}
+.btn:hover { filter: brightness(1.08); }
+.btn:active { transform: scale(.98); }
+.btn.sm { min-height: 40px; padding: 0 18px; font-size: 12px; }
+.link { color: var(--fg); font: 600 var(--fs-body)/1 var(--font-body); text-underline-offset: 4px; }
+
+/* nav */
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 48px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
+.brand img { height: 44px; width: auto; display: block; }
+
+/* hero */
+.hero { display: grid; gap: 48px; align-items: center; }
+.hero-copy { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+.stage { position: relative; display: flex; justify-content: center; min-width: 0; }
+.stage::before {
+  content: ""; position: absolute; inset: -6% -10% 0;
+  background: radial-gradient(55% 45% at 50% 38%, rgba(255, 90, 31, .24), transparent 72%);
+  pointer-events: none;
+}
+.stage .phone { position: relative; }
+.float {
+  position: absolute; z-index: 2;
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: 16px;
+  padding: 10px 14px; display: flex; flex-direction: column; gap: 2px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .5);
+}
+.float span { color: var(--muted); font-weight: 500; }
+.float b { font-weight: 700; color: var(--fg); }
+.float.pr { left: -4px; top: 30%; }
+.float.pr b { color: var(--accent); }
+.float.wk { right: -4px; bottom: 15%; }
+
+/* statement */
+.statement { display: flex; flex-direction: column; gap: 28px; }
+.statement h2 { max-width: 14ch; }
+.statement .lede { max-width: 52ch; }
+
+/* how it works */
+.how, .programs, .faq, .pricing { display: flex; flex-direction: column; gap: 32px; }
+.head { display: flex; flex-direction: column; gap: 20px; }
+.steps { list-style: none; padding: 0; display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); counter-reset: s; }
+.step { counter-increment: s; background: var(--surface); border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 14px; }
+.step::before {
+  content: counter(s); width: 34px; height: 34px; border-radius: 50%;
+  background: var(--accent); color: var(--on-accent);
+  display: grid; place-items: center; font: 800 15px/1 var(--font-display);
+}
+
+/* split */
+.split { display: grid; gap: 48px; align-items: center; }
+.split-copy { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+
+/* programs */
+.pgrid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.pcard { background: var(--surface); border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.ptop { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+
+/* feature cards */
+.cards { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); }
+.card { background: var(--surface); border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.card-text { padding: 28px 28px 0; display: flex; flex-direction: column; gap: 12px; }
+.card-text p { max-width: 40ch; }
+.card-media {
+  height: clamp(300px, 78vw, 380px); overflow: hidden;
+  display: flex; justify-content: center; align-items: flex-start; padding-top: 28px;
+  background: radial-gradient(60% 50% at 50% 70%, rgba(255, 90, 31, .10), transparent 75%);
+}
+.card-media .phone { --pw: min(240px, 66%); }
+.card.plain { justify-content: center; padding-bottom: 28px; gap: 24px; }
+.card.plain .card-text { padding-top: 40px; }
+.card.plain .actions { padding: 0 28px; }
+
+/* plans */
+.plans { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); }
+.plan { border: 1px solid var(--line); border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.plan.pro { border-color: var(--accent); background: var(--surface); }
+.price { font: 800 var(--fs-price)/1 var(--font-display); text-transform: uppercase; display: flex; flex-direction: column; gap: 8px; }
+.price small { font: 500 var(--fs-small)/1.4 var(--font-body); color: var(--muted); text-transform: none; }
+.plan ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.plan li { padding-left: 18px; position: relative; }
+.plan li::before { content: ""; position: absolute; left: 0; top: .62em; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+/* faq */
+.qa { border-top: 1px solid var(--line); }
+.qa details { border-bottom: 1px solid var(--line); }
+.qa summary {
+  cursor: pointer; list-style: none; min-height: 60px; padding: 18px 0;
+  font: 600 17px/1.4 var(--font-body); display: flex; justify-content: space-between; align-items: center; gap: 16px;
+}
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary::after { content: "+"; color: var(--accent); font-size: 26px; line-height: 1; flex: none; }
+.qa details[open] summary::after { content: "–"; }
+.qa p { padding: 0 0 22px; max-width: 62ch; }
+
+.closing { display: flex; flex-direction: column; align-items: flex-start; gap: 28px; }
+
+/* footer */
+.foot { border-top: 1px solid var(--line); padding-top: 56px; display: flex; flex-direction: column; gap: 36px; }
+.mega { font-size: clamp(48px, 15vw, 176px); line-height: .92; }
+.foot-bar { display: flex; flex-wrap: wrap; gap: 12px 40px; justify-content: space-between; }
+.foot-bar p { max-width: 52ch; }
+.copyable { color: var(--fg); user-select: all; }
+.foot-bar .link { font: 600 var(--fs-small)/1.4 var(--font-body); }
+
+/* phone frame around a real app screenshot */
+.phone { width: var(--pw, min(300px, 76vw)); container-type: inline-size; flex: none; }
+.bezel {
+  border-radius: 13cqw; background: #050505;
+  border: 1.4cqw solid #2B2B2F; padding: 1.2cqw;
+  box-shadow: 0 4cqw 12cqw rgba(0, 0, 0, .55);
+}
+.shot { border-radius: 11.4cqw; overflow: hidden; aspect-ratio: 780 / 1688; background: var(--bg); }
+.shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+@media (min-width: 700px) {
+  .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .card-media { height: 400px; }
+  .float.pr { left: 4%; }
+  .float.wk { right: 4%; }
+}
+@media (min-width: 880px) {
+  .hero { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 64px; }
+  .hero .phone { --pw: 320px; }
+  .split { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 80px; }
+  .split .stage .phone { --pw: 310px; }
+}
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="nav">
+    <a class="brand" href="../" aria-label="Levi Cox Fitness, back to the main site"><img src="../images/logo-white.svg" width="484" height="165" alt="Levi Cox Fitness"></a>
+    <a class="btn sm" href="https://id-preview--08242d7a-be4f-472c-8181-4b333e985498.lovable.app" target="_blank" rel="noopener">Open the app</a>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="hero-copy">
+      <h1>Train the plan.<span class="accent">Log every set.</span></h1>
+      <p class="lede">Structured programs from Levi Cox, with every set, rep and weight in one place. Free to start.</p>
+      <div class="actions">
+        <a class="btn" href="https://id-preview--08242d7a-be4f-472c-8181-4b333e985498.lovable.app" target="_blank" rel="noopener">Start training</a>
+        <a class="link" href="https://id-preview--08242d7a-be4f-472c-8181-4b333e985498.lovable.app" target="_blank" rel="noopener">I have an account</a>
+      </div>
+      <ul class="chips">
+        <li>Programs</li><li>Set logging</li><li>Rest timer</li><li>Exercise swaps</li><li>Personal records</li>
+      </ul>
+    </div>
+    <div class="stage">
+      <div class="float pr"><b>1 PR</b><span>Day 4, chest, shoulders, back</span></div>
+      <div class="float wk"><b>Week 3</b><span>Foundation phase</span></div>
+      <div class="phone"><div class="bezel"><div class="shot"><img src="shots/home.jpg" width="780" height="1688" alt="App home screen showing the next workout, Day 4 of 5, with this week's target of 1 rep in reserve and a Start workout button"></div></div></div>
+    </div>
+  </section>
+
+  <section class="statement">
+    <h2>Made for the gym floor.</h2>
+    <p class="lede">Open the app, see today's session and last time's weights, log your sets and let the rest timer count you back in. The programs come from a coach who trains clients every week, so the plan is already worked out.</p>
+  </section>
+
+  <section class="how">
+    <h2>How it works.</h2>
+    <ol class="steps">
+      <li class="step"><h3>Pick a program.</h3><p>Start with the free base program, buy a program once, or go Pro for all of them.</p></li>
+      <li class="step"><h3>Follow the day.</h3><p>Open today's session, see the exercises and last time's weights, and swap anything you can't do.</p></li>
+      <li class="step"><h3>Log and review.</h3><p>Record every set, then watch your records and history build up.</p></li>
+    </ol>
+  </section>
+
+  <section class="split">
+    <div class="split-copy">
+      <h2>Every set, logged.</h2>
+      <p class="lede">Weight and reps for each set, with your previous numbers right beside them so you know exactly what to beat. Add a drop set, rest-pause, myo-reps or partials without leaving the exercise.</p>
+      <ul class="chips">
+        <li>Previous weights</li><li>Drop sets</li><li>Rest-pause</li><li>Myo-reps</li><li>Partials</li><li>Exercise swaps</li>
+      </ul>
+    </div>
+    <div class="stage">
+      <div class="phone"><div class="bezel"><div class="shot"><img src="shots/logger.jpg" width="780" height="1688" loading="lazy" alt="Workout logger showing incline dumbbell press with previous weights beside each set and options to add a drop set, rest-pause, myo-reps or partials"></div></div></div>
+    </div>
+  </section>
+
+  <section class="programs">
+    <div class="head">
+      <h2>Programs.</h2>
+      <p class="lede">Start with the free base program, or pick up a full program from Levi.</p>
+    </div>
+    <div class="pgrid">
+      <article class="pcard">
+        <div class="ptop"><h3>Base program</h3><span class="tag">Free</span></div>
+        <div class="meta"><span>4 days a week</span></div>
+        <p>A simple starting point. No purchase needed.</p>
+      </article>
+      <article class="pcard">
+        <div class="ptop"><h3>Train Like Levi</h3><span class="tag o">$29</span></div>
+        <div class="meta"><span>Intermediate</span><span>12 weeks</span><span>5-day rotation</span></div>
+        <p>The 12-week physique blueprint, built around heavy compounds, supersets and a pump finisher.</p>
+      </article>
+      <article class="pcard">
+        <div class="ptop"><h3>Glute-Max Guide</h3><span class="tag o">Pro</span></div>
+        <div class="meta"><span>4 workouts</span></div>
+        <p>Maximum booty gains in four glute workouts. Included with Pro.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="cards" aria-label="What's in the app">
+    <article class="card">
+      <div class="card-text">
+        <h3>Follow the plan.</h3>
+        <p>Twelve weeks in phases, with a training target for each week.</p>
+      </div>
+      <div class="card-media"><div class="phone"><div class="bezel"><div class="shot"><img src="shots/program.jpg" width="780" height="1688" loading="lazy" alt="Train Like Levi program page listing the training phases"></div></div></div></div>
+    </article>
+
+    <article class="card">
+      <div class="card-text">
+        <h3>Preview every day.</h3>
+        <p>Supersets, rep ranges, rest times and swaps for every exercise, before you start.</p>
+      </div>
+      <div class="card-media"><div class="phone"><div class="bezel"><div class="shot"><img src="shots/day.jpg" width="780" height="1688" loading="lazy" alt="Workout day preview showing supersets with rep ranges, rest times and swap options"></div></div></div></div>
+    </article>
+
+    <article class="card">
+      <div class="card-text">
+        <h3>Rest timer built in.</h3>
+        <p>It runs at the bottom of the screen. Add or cut 15 seconds, or skip it.</p>
+      </div>
+      <div class="card-media"><div class="phone"><div class="bezel"><div class="shot"><img src="shots/timer.jpg" width="780" height="1688" loading="lazy" alt="Workout in progress with the rest timer counting down above the tab bar"></div></div></div></div>
+    </article>
+
+    <article class="card">
+      <div class="card-text">
+        <h3>Review every session.</h3>
+        <p>Volume, sets, reps and the muscles you trained, after every workout.</p>
+      </div>
+      <div class="card-media"><div class="phone"><div class="bezel"><div class="shot"><img src="shots/review.jpg" width="780" height="1688" loading="lazy" alt="Workout review with total volume, sets, reps and a body map of muscles trained"></div></div></div></div>
+    </article>
+
+    <article class="card">
+      <div class="card-text">
+        <h3>Keep your history.</h3>
+        <p>Every workout stays saved, with personal records flagged.</p>
+      </div>
+      <div class="card-media"><div class="phone"><div class="bezel"><div class="shot"><img src="shots/history.jpg" width="780" height="1688" loading="lazy" alt="Workout history list with personal records flagged on each session"></div></div></div></div>
+    </article>
+
+    <article class="card plain">
+      <div class="card-text">
+        <h3>Start free.</h3>
+        <p>Follow the free 4-day base program, or skip programs and log your own workouts.</p>
+      </div>
+      <div class="actions"><a class="btn" href="https://id-preview--08242d7a-be4f-472c-8181-4b333e985498.lovable.app" target="_blank" rel="noopener">Start training</a></div>
+    </article>
+  </section>
+
+  <section class="pricing" id="pricing">
+    <div class="head">
+      <h2>Free to start.</h2>
+      <p class="lede">The app costs nothing. Buy a program once, or go Pro for all of them.</p>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>Free</h3>
+        <div class="price">$0</div>
+        <ul>
+          <li>4-day base program</li>
+          <li>Log your own workouts</li>
+          <li>History and records</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <h3>Program</h3>
+        <div class="price">$29<small>one-off, per program</small></div>
+        <ul>
+          <li>Train Like Levi or any single program</li>
+          <li>Pay once, no subscription</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <h3>Stack</h3>
+        <div class="price">$14<small>one-off, per stack</small></div>
+        <ul>
+          <li>Shorter add-on blocks</li>
+          <li>Run alongside your program or on their own</li>
+        </ul>
+      </div>
+      <div class="plan pro">
+        <h3>Pro</h3>
+        <div class="price">$12.99<small>a month, or $99 a year</small></div>
+        <ul>
+          <li>Every Pro program, including Glute-Max Guide</li>
+          <li>New programs and stacks as they're added</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">Every program is also available as a PDF.</p>
+  </section>
+
+  <section class="faq">
+    <h2>Questions.</h2>
+    <div class="qa">
+      <details>
+        <summary>Is the app really free?</summary>
+        <p>Yes. You can follow the free 4-day base program or log your own workouts without paying. Extra programs are optional one-off purchases, or included with Pro.</p>
+      </details>
+      <details>
+        <summary>Do I need to follow a program?</summary>
+        <p>No. Skip programs and log your own exercises whenever you like.</p>
+      </details>
+      <details>
+        <summary>Which phones does it work on?</summary>
+        <p>It's a web app. Open it in your phone's browser and add it to your home screen to use it like any other app.</p>
+      </details>
+      <details>
+        <summary>What if the equipment I need is taken?</summary>
+        <p>Every exercise lists swaps that train the same muscles. Pick one and carry on with the session.</p>
+      </details>
+      <details>
+        <summary>How is it different from Hevy or Strong?</summary>
+        <p>Those are great if you build your own routines. This app is built around following Levi's programs, with every day planned for you. You can still log your own workouts if you prefer.</p>
+      </details>
+      <details>
+        <summary>Can I get the programs as a PDF?</summary>
+        <p>Yes. Every program and Stack is also sold as a PDF.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="closing">
+    <h2>Pick a program.<span class="accent">Start today.</span></h2>
+    <a class="btn" href="https://id-preview--08242d7a-be4f-472c-8181-4b333e985498.lovable.app" target="_blank" rel="noopener">Start training</a>
+  </section>
+
+  <footer class="foot">
+    <div class="mega">Levi Cox<br>Fitness</div>
+    <div class="foot-bar">
+      <p>Designed by Levi Cox in Miami. Questions or feedback: <span class="copyable">levicoxfitness@gmail.com</span></p>
+      <p><a class="link" href="../">In-person training with Levi</a></p>
+      <p>© 2026 Levi Cox Fitness</p>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
