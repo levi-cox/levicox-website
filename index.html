@@ -17,6 +17,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
+<script>document.documentElement.className="js"</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -24,24 +25,53 @@
 {"@context":"https://schema.org","@type":"Person","name":"Levi Cox","jobTitle":"Personal trainer","url":"https://levicox.com/","email":"levicoxfitness@gmail.com","sameAs":["https://instagram.com/levi_cox","https://instagram.com/levicoxfitness","https://youtube.com/@levicoxfitness","https://stan.store/levicox"],"worksFor":{"@type":"Organization","name":"Levi Cox Fitness"},"alumniOf":"BSc Anatomy & Neuroscience"}
 </script>
 <style>
-:root{--ink:#111111;--bone:#F2F0EB;--signal:#FF5B1F;--stone:#E6E3DA;--rule:#3A3A3A;--mut:#3B3832;--inkmut:#B9B5AB;--deep:#8A3410}
+:root{--ink:#111111;--bone:#F2F0EB;--signal:#FF5B1F;--stone:#E6E3DA;--rule:#3A3A3A;--mut:#3B3832;--inkmut:#B9B5AB;--deep:#8A3410;
+/* motion + depth tokens: one easing set, two durations, one shadow scale */
+--ease-out:cubic-bezier(.22,1,.36,1);--ease-in:cubic-bezier(.64,0,.78,0);--ease-io:cubic-bezier(.65,0,.35,1);--spring:cubic-bezier(.34,1.56,.64,1);
+--t-micro:180ms;--t-macro:480ms;--r:8px;
+--sh1:0 1px 2px rgba(0,0,0,.14),0 3px 8px rgba(0,0,0,.08);--sh2:0 2px 4px rgba(0,0,0,.14),0 12px 28px rgba(0,0,0,.16)}
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:4rem}
-body{margin:0;background:var(--bone);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body{margin:0;overflow-x:clip;background:var(--bone);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%;height:auto}
 a{color:inherit}
 .wrap{max-width:1160px;margin:0 auto;padding:0 40px}
 .d{font-family:'Archivo',system-ui,sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:0;line-height:.95;margin:0}
 .lab{font-family:'Archivo',system-ui,sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.18em;font-size:11px}
-.btn{display:flex;align-items:center;justify-content:center;height:56px;padding:0 28px;border-radius:8px;font-family:'Archivo',system-ui,sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:15px;text-decoration:none;white-space:nowrap}
+.btn{display:flex;align-items:center;justify-content:center;height:56px;min-height:44px;padding:0 28px;border-radius:var(--r);font-family:'Archivo',system-ui,sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:15px;text-decoration:none;white-space:nowrap;
+position:relative;-webkit-tap-highlight-color:transparent;transition:background-color var(--t-micro) var(--ease-io),color var(--t-micro) var(--ease-io),border-color var(--t-micro) var(--ease-io),transform var(--t-micro) var(--spring),box-shadow var(--t-micro) var(--ease-out),opacity var(--t-micro) var(--ease-io)}
 .btn-hero{background:var(--signal);color:var(--ink)}
-.btn-hero:hover{background:#ff7340}
 .btn-ghost{color:var(--ink);border:1.5px solid var(--ink)}
-.btn-ghost:hover{background:var(--ink);color:var(--bone)}
 .btn-ghost-ink{color:var(--bone);border:1.5px solid var(--bone)}
-.btn-ghost-ink:hover{background:var(--bone);color:var(--ink)}
 .btn-sm{height:44px;padding:0 20px;font-size:13px}
-.lnk{font-weight:600;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px;text-decoration-color:var(--signal)}
+.btn .arr{display:inline-block;margin-left:10px;transition:transform var(--t-micro) var(--spring)}
+
+/* Button states: rest -> hover (wind-up, then lift) -> pressed (squash) -> busy (spinner) */
+@keyframes wind{0%{transform:translateY(0) scale(1)}35%{transform:translateY(1.5px) scale(1.012,.97)}}
+@media (hover:hover){
+.btn:hover{transform:translateY(-2px);box-shadow:var(--sh1);animation:wind 260ms var(--ease-out)}
+.btn:hover .arr{transform:translateX(5px)}
+.btn-hero:hover{background:#ff7340}
+.btn-ghost:hover{background:var(--ink);color:var(--bone)}
+.btn-ghost-ink:hover{background:var(--bone);color:var(--ink)}
+}
+.btn:active{transform:translateY(1px) scale(1.03,.93);box-shadow:none;animation:none;transition-duration:70ms}
+.btn-hero:active{background:#e04a12}
+.btn-ghost:active{background:var(--ink);color:var(--bone)}
+.btn-ghost-ink:active{background:var(--bone);color:var(--ink)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.btn.is-busy{pointer-events:none;opacity:.88}
+.btn.is-busy::before{content:"";flex:none;width:16px;height:16px;margin-right:10px;border:2.5px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
+.btn.is-busy .arr{display:none}
+
+.lnk{position:relative;font-weight:600;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px;text-decoration-color:var(--signal);transition:text-decoration-color var(--t-micro) var(--ease-io)}
+.lnk::before{content:"";position:absolute;inset:-14px -8px}/* invisible 44px+ tap area for inline links */
+.lnk:hover{text-decoration-color:currentColor}
+.lnk:active{opacity:.6}
+.lnk-block{display:inline-flex;align-items:center;min-height:44px}
+.lnk-block::before{display:none}
+.row-links{display:flex;flex-wrap:wrap;align-items:center;gap:0 20px}
+.alt{font-size:15px}
 a:focus-visible{outline:3px solid var(--signal);outline-offset:3px}
 .ink{background:var(--ink);color:var(--bone)}
 .mut{color:var(--mut)}
@@ -52,8 +82,8 @@ p{margin:0}
 /* Header */
 .head{display:flex;align-items:center;justify-content:space-between;padding-top:18px;padding-bottom:18px}
 .head img{height:52px;width:auto}
-.nav{display:flex;align-items:center;gap:32px}
-.nav a:not(.btn){text-decoration:none;font-weight:500;font-size:15px}
+.nav{display:flex;align-items:center;gap:20px}
+.nav a:not(.btn){display:inline-flex;align-items:center;min-height:44px;padding:0 8px;text-decoration:none;font-weight:500;font-size:15px}
 .nav a:not(.btn):hover{text-decoration:underline;text-decoration-color:var(--signal);text-decoration-thickness:2px;text-underline-offset:6px}
 
 /* Hero */
@@ -112,6 +142,23 @@ p{margin:0}
 .foot .wrap{padding-top:20px;padding-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:13px}
 .foot img{height:28px;width:28px}
 .foot span.brand{display:flex;align-items:center;gap:12px}
+.foot .meta{display:flex;align-items:center;flex-wrap:wrap;gap:0 20px}
+
+/* Depth: one radius, one shadow scale for every photo and floating element */
+.hero img,.side img,.strip img,.programs figure img,.brands>img,.about img{border-radius:var(--r);box-shadow:var(--sh2)}
+.prod{transition:background-color var(--t-micro) var(--ease-io),transform var(--t-micro) var(--spring),box-shadow var(--t-micro) var(--ease-out)}
+@media (hover:hover){.prod:hover{background:rgba(255,255,255,.4);transform:translateY(-2px);box-shadow:var(--sh1)}}
+
+/* Mobile thumb-zone Book bar (hidden on desktop) */
+.dock{display:none}
+
+/* Entrance: container first, photo settles a beat later, along a curved path */
+@keyframes arc{0%{opacity:0;transform:translate(-16px,26px)}55%{opacity:1;transform:translate(3px,-5px)}100%{opacity:1;transform:none}}
+.hero .stack{animation:arc 520ms var(--ease-out) both}
+.hero figure{animation:arc 520ms var(--ease-out) 160ms both}
+.js .rv{opacity:0}
+.js .rv.in{animation:arc 520ms var(--ease-out) var(--d,0ms) both}
+.js .rv.rv-img.in{--d:160ms}
 
 @media (max-width:860px){
   .wrap{padding:0 20px}
@@ -138,7 +185,8 @@ p{margin:0}
   .strip{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding:32px 20px 0;gap:10px;scrollbar-width:none;max-width:none}
   .strip img{flex:0 0 190px;width:190px;scroll-snap-align:start;margin-top:0!important}
   .programs{margin-top:40px}
-  .programs h2,.brands h2{font-size:40px}
+  .programs h2,.brands h2{font-size:clamp(30px,10.5vw,40px)}
+  .hero>*,.training .wrap>*,.programs .wrap>*,.brands>*,.about .wrap>*,.contact .wrap>*{min-width:0}
   .programs figure{display:none}
   .prod{grid-template-columns:1fr;gap:12px;padding:20px 0}
   .prod h3{font-size:28px}
@@ -152,7 +200,20 @@ p{margin:0}
   .contact h2{font-size:34px}
   .foot .wrap{flex-direction:column;align-items:flex-start;padding-bottom:28px}
 }
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media (max-width:860px){
+  .btn{padding:0 16px;letter-spacing:.04em}
+  body{padding-bottom:84px}
+  .dock{display:flex;position:fixed;left:16px;right:16px;bottom:max(12px,env(safe-area-inset-bottom));z-index:30;box-shadow:var(--sh2);transform:translateY(160%);visibility:hidden;transition:transform var(--t-macro) var(--ease-out),visibility 0s linear var(--t-macro)}
+  .dock.show{transform:none;visibility:visible;transition-delay:0s}
+  .dock.show:active{transform:translateY(1px) scale(1.03,.93)}
+  .foot .meta{flex-direction:column;align-items:flex-start}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important}
+  .btn.is-busy::before{animation:none;border-right-color:currentColor;border-style:dotted}
+  .js .rv{opacity:1}
+}
 </style>
 </head>
 <body>
@@ -162,7 +223,6 @@ p{margin:0}
 <nav class="nav" aria-label="Main">
 <a href="#training">Training</a>
 <a href="#programs">Programs</a>
-<a href="#brands">Brands</a>
 <a href="#about">About</a>
 <a class="btn btn-hero btn-sm" href="#contact">Book a session</a>
 </nav>
@@ -175,9 +235,9 @@ p{margin:0}
 <div class="lab">Personal trainer · Miami now · Melbourne from January</div>
 <h1 class="d">Personal training<br>in Miami.<br><span class="orange">Programs online.</span></h1>
 <p class="mut sub">I'm Levi Cox. One-to-one strength and physique coaching in person, plus programs you can follow anywhere. The Levi Cox Fitness <a class="lnk" href="app/">app</a> is coming soon.</p>
-<div class="cta">
-<a class="btn btn-hero" href="#contact">Book personal training</a>
-<a class="btn btn-ghost" href="#programs">Online programs</a>
+<div class="cta" style="align-items:center;gap:8px 20px">
+<a class="btn btn-hero" href="#contact">Book personal training<span class="arr" aria-hidden="true">→</span></a>
+<a class="lnk lnk-block alt" href="#programs">or see online programs</a>
 </div>
 <p class="mut facts">7+ years coaching · BSc Anatomy &amp; Neuroscience · Certified in personal training and nutrition</p>
 </div>
@@ -186,7 +246,7 @@ p{margin:0}
 
 <section id="training" class="ink training">
 <div class="wrap">
-<div class="stack" style="gap:22px">
+<div class="stack rv" style="gap:22px">
 <div class="lab orange">Personal training</div>
 <h2 class="d">Training for men<br>who want more.</h2>
 <p class="inkmut intro">Hypertrophy, strength and conditioning in one plan, built around your goal, your schedule and how your body moves. Sessions are one-to-one, and every one of them is written down so we can see what's working.</p>
@@ -196,11 +256,11 @@ p{margin:0}
 <div class="pillar"><h3>Conditioning</h3><p class="inkmut">Work capacity that keeps you lean and lets you recover between sets, without eating into your strength.</p></div>
 </div>
 <div class="cta">
-<a class="btn btn-hero" href="#contact">Enquire about training</a>
+<a class="btn btn-hero" href="#contact">Enquire about training<span class="arr" aria-hidden="true">→</span></a>
 <a class="btn btn-ghost-ink" href="https://wa.me/61404263024">WhatsApp me</a>
 </div>
 </div>
-<div class="side">
+<div class="side rv rv-img">
 <img src="images/v2/row.jpg" alt="Levi Cox demonstrating a single-arm dumbbell row with strict form" width="1133" height="1700" loading="lazy">
 <div class="loc">
 <div><div class="lab">Miami, FL · now</div><p class="inkmut">Elev8tion Midtown, or I come to you.</p></div>
@@ -210,7 +270,7 @@ p{margin:0}
 </div>
 </section>
 
-<section class="wrap strip" aria-label="Training photos">
+<section class="wrap strip rv rv-img" aria-label="Training photos">
 <img src="images/v2/pullup.jpg" alt="Levi Cox performing a pull-up" width="1133" height="1700" loading="lazy">
 <img src="images/v2/dips.jpg" alt="Levi Cox doing weighted chain dips" width="1133" height="1700" loading="lazy">
 <img src="images/v2/cable.jpg" alt="Levi Cox training chest on the cable machine" width="1133" height="1700" loading="lazy">
@@ -219,60 +279,60 @@ p{margin:0}
 
 <section id="programs" class="programs">
 <div class="wrap">
-<div class="stack" style="gap:20px">
+<div class="stack rv" style="gap:20px">
 <div class="lab">Online programs</div>
 <h2 class="d">Train my way,<br>anywhere.</h2>
 <p class="mut intro">Programs are PDFs you can open on any phone and follow in any gym. They're sold through my Stan Store for now. The Levi Cox Fitness <a class="lnk" href="app/">app</a> is on the way.</p>
 <figure><img src="images/v2/dbpress-back.jpg" alt="Levi Cox's back during a seated dumbbell shoulder press" width="1133" height="1700" loading="lazy"></figure>
 </div>
-<div>
+<div class="rv rv-img">
 <div class="prod">
 <div><div class="lab">PDF program · $29</div><h3 class="d">Train Like Levi</h3><p class="mut">A 12-week physique blueprint. A 5-day rotating split built on heavy compounds, supersets and a pump finish.</p></div>
-<a class="btn btn-hero" href="https://stan.store/levicox">Buy on Stan Store</a>
+<a class="btn btn-hero" href="https://stan.store/levicox" aria-label="Buy Train Like Levi, $29, on Stan Store">Buy on Stan Store<span class="arr" aria-hidden="true">→</span></a>
 </div>
 <div class="prod">
 <div><div class="lab">PDF program · $14</div><h3 class="d">Glute-Max Guide</h3><p class="mut">Four workouts for maximum glute growth, built on common gym equipment.</p></div>
-<a class="btn btn-hero" href="https://stan.store/levicox">Buy on Stan Store</a>
+<a class="btn btn-hero" href="https://stan.store/levicox" aria-label="Buy Glute-Max Guide, $14, on Stan Store">Buy on Stan Store<span class="arr" aria-hidden="true">→</span></a>
 </div>
 <div class="prod">
 <div><div class="lab">Coming soon</div><h3 class="d">Levi Cox Fitness app</h3><p class="mut">Follow my programs and log every set in one place.</p></div>
 <a class="btn btn-ghost" href="app/">See the app</a>
 </div>
-<p class="mut" style="margin-top:20px;font-size:14px">All programs and the full store: <a class="lnk" href="https://stan.store/levicox">my Stan Store</a> · Free exercise demos on <a class="lnk" href="https://youtube.com/@levicoxfitness">YouTube</a></p>
+<p class="mut row-links" style="margin-top:12px;font-size:14px"><span>All programs and the full store:</span> <a class="lnk lnk-block" href="https://stan.store/levicox">my Stan Store</a> <span>Free exercise demos on</span> <a class="lnk lnk-block" href="https://youtube.com/@levicoxfitness">YouTube</a></p>
 </div>
 </div>
 </section>
 
 <section id="brands" class="wrap brands">
-<img src="images/v2/squat.jpg" alt="Levi Cox preparing for a barbell back squat" width="1700" height="1133" loading="lazy">
-<div class="stack" style="gap:20px">
+<img class="rv rv-img" src="images/v2/squat.jpg" alt="Levi Cox preparing for a barbell back squat" width="1700" height="1133" loading="lazy">
+<div class="stack rv" style="gap:20px">
 <div class="lab">Content &amp; brands</div>
 <h2 class="d">Open to<br>partnerships.</h2>
 <p class="mut" style="max-width:440px;font-size:17px">I make training, nutrition and science-based fitness content on Instagram and YouTube. If your brand fits how I train, let's talk.</p>
 <div class="cta"><a class="btn btn-hero" href="mailto:levicoxfitness@gmail.com">Partnership enquiries</a></div>
-<p class="mut" style="font-size:15px"><a class="lnk" href="https://instagram.com/levi_cox">@levi_cox</a> · <a class="lnk" href="https://instagram.com/levicoxfitness">@levicoxfitness</a> · <a class="lnk" href="https://youtube.com/@levicoxfitness">YouTube</a></p>
+<p class="mut row-links" style="font-size:15px"><a class="lnk lnk-block" href="https://instagram.com/levi_cox">@levi_cox</a> <a class="lnk lnk-block" href="https://instagram.com/levicoxfitness">@levicoxfitness</a> <a class="lnk lnk-block" href="https://youtube.com/@levicoxfitness">YouTube</a></p>
 </div>
 </section>
 
 <section id="about" class="about">
 <div class="wrap">
-<div class="stack" style="gap:16px">
+<div class="stack rv" style="gap:16px">
 <div class="lab">About</div>
 <h2 class="d">Hi, I'm Levi.</h2>
 <p class="mut">I did men's artistic gymnastics for 13 years, then coached and judged at competitions. It taught me to respect technique and to be patient with progress.</p>
 <p class="mut">I hold a BSc in Anatomy &amp; Neuroscience and certifications in personal training and nutrition coaching, with 7+ years working with clients.</p>
 </div>
-<img src="images/v2/boxingbag.jpg" alt="Levi Cox, fitness coach, posing beside a heavy bag in the gym" width="1700" height="1133" loading="lazy">
+<img class="rv rv-img" src="images/v2/boxingbag.jpg" alt="Levi Cox, fitness coach, posing beside a heavy bag in the gym" width="1700" height="1133" loading="lazy">
 </div>
 </section>
 
 <section id="contact" class="ink contact">
 <div class="wrap">
-<div class="stack" style="gap:16px">
+<div class="stack rv" style="gap:16px">
 <h2 class="d">Ready to start?<br><span class="orange">Tell me your goal.</span></h2>
 <p class="inkmut" style="max-width:420px">Say where you're based and what you want to change. I'll reply with next steps.</p>
 </div>
-<div class="stack" style="gap:10px">
+<div class="stack rv rv-img" style="gap:10px">
 <a class="btn btn-hero" href="https://wa.me/61404263024">WhatsApp +61 404 263 024</a>
 <div class="pair">
 <a class="btn btn-ghost-ink" href="https://instagram.com/levi_cox">Instagram DM</a>
@@ -287,9 +347,42 @@ p{margin:0}
 <footer class="ink foot">
 <div class="wrap">
 <span class="brand"><img src="images/v2/mark-white.svg" alt="" width="256" height="256"><span class="lab">Levi Cox Fitness</span></span>
-<span class="inkmut">Miami, FL · Melbourne, VIC from January · © 2026</span>
+<span class="inkmut meta"><span>Miami, FL · Melbourne, VIC from January · © 2026</span> <a class="lnk lnk-block" href="#brands">Brands &amp; partnerships</a></span>
 </div>
 </footer>
+
+<a class="btn btn-hero dock" href="#contact">Book personal training<span class="arr" aria-hidden="true">→</span></a>
+
+<script>
+(function(){
+  var d=document,root=d.documentElement;
+  // Scroll entrances (opacity/transform only, so no layout shift)
+  var rv=[].slice.call(d.querySelectorAll('.rv'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+    rv.forEach(function(el){io.observe(el)});
+  }else{rv.forEach(function(el){el.classList.add('in')})}
+  // Instant tap feedback on every outbound CTA (well under 400ms)
+  function clear(){[].forEach.call(d.querySelectorAll('.is-busy'),function(b){b.classList.remove('is-busy')})}
+  d.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a.btn');
+    if(!a||a.classList.contains('dock'))return;
+    var h=a.getAttribute('href')||'';
+    if(h.charAt(0)==='#')return;
+    a.classList.add('is-busy');setTimeout(clear,2500);
+  });
+  addEventListener('pageshow',clear);
+  // Mobile Book bar: shows once the hero CTA has scrolled away; hides while Programs (buy buttons) or Contact is on screen
+  var dock=d.querySelector('.dock'),hero=d.querySelector('.hero .btn-hero');
+  var guards=['programs','contact'].map(function(id){return d.getElementById(id)});
+  if(dock&&hero&&guards[0]&&guards[1]&&'IntersectionObserver' in window){
+    var heroIn=true,busy=[false,false];
+    function upd(){dock.classList.toggle('show',!heroIn&&!busy[0]&&!busy[1])}
+    new IntersectionObserver(function(es){heroIn=es[0].isIntersecting;upd()}).observe(hero);
+    guards.forEach(function(g,i){new IntersectionObserver(function(es){busy[i]=es[0].isIntersecting;upd()}).observe(g)});
+  }
+})();
+</script>
 
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f33d518409194d54966c510f856a7622"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
