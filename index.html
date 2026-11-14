@@ -156,6 +156,30 @@ p{margin:0}
 .form-ok{padding:28px 0}
 .form-ok h3{font-size:34px}
 .form-ok p{margin-top:12px;max-width:420px}
+.quiz{display:flex;flex-direction:column;gap:20px}
+.prog{height:4px;background:#2A2A2A;border-radius:2px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--signal);transition:width var(--t-macro) var(--ease-out)}
+.qn{color:var(--inkmut)}
+.steps{min-height:330px}
+.step{border:0;margin:0;padding:0;min-width:0}
+.step[hidden]{display:none}
+.step:not([hidden]){animation:arc 360ms var(--ease-out) both}
+.q{font-family:'Archivo',system-ui,sans-serif;font-weight:800;text-transform:uppercase;line-height:1;font-size:30px;margin:0 0 20px;padding:0;display:block;width:100%;outline:none}
+.opts{display:grid;gap:10px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opt{position:relative;display:flex;align-items:center;min-height:56px;padding:0 18px;border:1.5px solid var(--rule);border-radius:var(--r);background:#1B1B1B;font-weight:600;font-size:16px;cursor:pointer;transition:border-color var(--t-micro) var(--ease-io),background-color var(--t-micro) var(--ease-io),transform var(--t-micro) var(--spring)}
+.opt input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+@media (hover:hover){.opt:hover{border-color:#5A5A5A}}
+.opt:active{transform:scale(.985)}
+.opt:has(input:checked){border-color:var(--signal);background:rgba(255,91,31,.14)}
+.opt:has(input:focus-visible){box-shadow:0 0 0 3px rgba(255,91,31,.35)}
+.step.bad .err{display:block}
+.step .err{display:none;font-size:14px;color:#FF9C80;margin-top:10px}
+.opt-note{font-size:14px;color:var(--inkmut);margin-top:10px}
+.qnav{display:flex;align-items:center;gap:16px}
+.qnav .btn{flex:1}
+.back{background:none;border:0;color:var(--bone);font:inherit;font-weight:600;font-size:15px;min-height:44px;padding:0 4px;cursor:pointer;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px;text-decoration-color:var(--signal)}
+.back[hidden]{display:none}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .foot{border-top:1px solid #2A2A2A}
 .foot .wrap{padding-top:20px;padding-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:13px}
@@ -349,21 +373,26 @@ p{margin:0}
 <div class="wrap">
 <div class="stack rv" style="gap:16px">
 <h2 class="d">Ready to start?<br><span class="orange">Tell me your goal.</span></h2>
-<p class="inkmut" style="max-width:420px">Say where you're based and what you want to change. I'll reply with next steps.</p>
+<p class="inkmut" style="max-width:420px">Six quick questions, about a minute. I'll reply with next steps.</p>
 <p class="inkmut row-links" style="font-size:15px"><span>Or message me directly:</span> <a class="lnk lnk-block" href="https://wa.me/61404263024">WhatsApp</a> <a class="lnk lnk-block" href="https://instagram.com/levi_cox">Instagram DM</a> <a class="lnk lnk-block" href="mailto:levicoxfitness@gmail.com">Email</a></p>
 </div>
 <div class="rv rv-img">
-<form class="form" id="enquiry" novalidate action="https://formsubmit.co/levicoxfitness@gmail.com" method="POST">
-<div class="field"><label class="lab" for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Your name"><span class="err">Enter your name.</span></div>
-<div class="field"><label class="lab" for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com"><span class="err">Enter an email I can reply to.</span></div>
-<div class="field"><label class="lab" for="f-where">Where are you based?</label><select id="f-where" name="location" required><option value="">Choose one</option><option>Miami</option><option>Melbourne (from January)</option><option>Somewhere else</option></select><span class="err">Choose where you're based.</span></div>
-<div class="field"><label class="lab" for="f-goal">Your goal</label><textarea id="f-goal" name="goal" required placeholder="What do you want to change, and how many days a week can you train?"></textarea><span class="err">Tell me a little about your goal.</span></div>
+<form class="form quiz" id="enquiry" novalidate action="https://formsubmit.co/levicoxfitness@gmail.com" method="POST">
+<div><div class="prog" aria-hidden="true"><i id="prog"></i></div><p class="lab qn" id="qn" aria-live="polite" style="margin-top:12px">Question 1 of 6</p></div>
+<div class="steps">
+<fieldset class="step"><legend class="q" tabindex="-1">Where are you based?</legend><div class="opts"><label class="opt"><input type="radio" name="location" value="Miami" required>Miami</label><label class="opt"><input type="radio" name="location" value="Melbourne (from January)" required>Melbourne (from January)</label><label class="opt"><input type="radio" name="location" value="Somewhere else" required>Somewhere else</label></div><span class="err">Pick one to continue.</span></fieldset>
+<fieldset class="step"><legend class="q" tabindex="-1">What's your main goal?</legend><div class="opts two"><label class="opt"><input type="radio" name="goal" value="Build muscle" required>Build muscle</label><label class="opt"><input type="radio" name="goal" value="Get stronger" required>Get stronger</label><label class="opt"><input type="radio" name="goal" value="Lose fat" required>Lose fat</label><label class="opt"><input type="radio" name="goal" value="Something else" required>Something else</label></div><span class="err">Pick one to continue.</span></fieldset>
+<fieldset class="step"><legend class="q" tabindex="-1">How many days a week can you train?</legend><div class="opts two"><label class="opt"><input type="radio" name="days" value="2" required>2</label><label class="opt"><input type="radio" name="days" value="3" required>3</label><label class="opt"><input type="radio" name="days" value="4" required>4</label><label class="opt"><input type="radio" name="days" value="5 or more" required>5 or more</label></div><span class="err">Pick one to continue.</span></fieldset>
+<fieldset class="step"><legend class="q" tabindex="-1">Anything else I should know?</legend><div class="field"><label class="lab" for="f-note">Optional</label><textarea id="f-note" name="note" placeholder="Injuries, schedule, past training, what's worked or hasn't"></textarea></div></fieldset>
+<fieldset class="step"><legend class="q" tabindex="-1">What's your name?</legend><div class="field"><label class="lab" for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Your name"></div><span class="err">Enter your name.</span></fieldset>
+<fieldset class="step"><legend class="q" tabindex="-1">Where should I reply?</legend><div class="field"><label class="lab" for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com"></div><span class="err">Enter an email I can reply to.</span></fieldset>
+</div>
 <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label></div>
 <input type="hidden" name="_subject" value="New enquiry from levicox.com">
 <input type="hidden" name="_template" value="table">
 <input type="hidden" name="_captcha" value="false">
 <div class="form-msg" id="form-msg" role="alert" hidden></div>
-<button class="btn btn-hero" type="submit" id="send">Send enquiry<span class="arr" aria-hidden="true">→</span></button>
+<div class="qnav"><button class="back" type="button" id="back" hidden>Back</button><button class="btn btn-hero" type="submit" id="send"><span id="send-t">Next</span><span class="arr" aria-hidden="true">→</span></button></div>
 </form>
 <div class="form-ok" id="form-ok" hidden tabindex="-1"><h3 class="d">Got it.<br><span class="orange">I'll be in touch.</span></h3><p class="inkmut">Thanks for the details. I'll reply to your email with next steps.</p></div>
 </div>
@@ -415,22 +444,34 @@ p{margin:0}
 <script>
 (function(){
   var f=document.getElementById('enquiry'); if(!f)return;
-  var msg=document.getElementById('form-msg'),btn=document.getElementById('send'),ok=document.getElementById('form-ok');
-  function check(el){var f=el.closest('.field'),bad=!el.checkValidity();f.classList.toggle('bad',bad);return !bad}
-  [].forEach.call(f.querySelectorAll('input[required],select[required],textarea[required]'),function(el){
-    el.addEventListener('blur',function(){if(el.value||el.closest('.field').classList.contains('bad'))check(el)});
-    el.addEventListener('input',function(){if(el.closest('.field').classList.contains('bad'))check(el)});
-  });
-  f.addEventListener('submit',function(e){
-    e.preventDefault(); msg.hidden=true;
-    var first=null; [].forEach.call(f.querySelectorAll('[required]'),function(el){if(!check(el)&&!first)first=el});
-    if(first){first.focus();return}
+  var steps=[].slice.call(f.querySelectorAll('.step')),N=steps.length,i=0;
+  var msg=document.getElementById('form-msg'),btn=document.getElementById('send'),bt=document.getElementById('send-t'),back=document.getElementById('back'),ok=document.getElementById('form-ok'),prog=document.getElementById('prog'),qn=document.getElementById('qn');
+  function valid(st){
+    var req=[].slice.call(st.querySelectorAll('[required]')),good=true;
+    if(req.length&&req[0].type==='radio'){good=req.some(function(r){return r.checked})}
+    else req.forEach(function(el){if(!el.checkValidity())good=false});
+    st.classList.toggle('bad',!good);return good;
+  }
+  function go(n,focus){
+    i=n;steps.forEach(function(s,k){s.hidden=k!==n});
+    prog.style.width=((n+1)/N*100)+'%';qn.textContent='Question '+(n+1)+' of '+N;
+    back.hidden=n===0;bt.textContent=n===N-1?'Send enquiry':'Next';msg.hidden=true;
+    if(focus){var t=steps[n].querySelector('input[type=text],input[type=email],textarea');(t||steps[n].querySelector('.q')).focus({preventScroll:true})}
+  }
+  function submit(){
     btn.classList.add('is-busy');
     fetch('https://formsubmit.co/ajax/levicoxfitness@gmail.com',{method:'POST',headers:{'Accept':'application/json'},body:new FormData(f)})
       .then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})
       .then(function(j){if(j.success===false||j.success==='false')throw new Error('rejected');f.hidden=true;ok.hidden=false;ok.focus()})
       .catch(function(){btn.classList.remove('is-busy');msg.hidden=false;msg.innerHTML="That didn't send. Your answers are still here, so try again, or reach me on <a href=\"https://wa.me/61404263024\">WhatsApp</a> or <a href=\"mailto:levicoxfitness@gmail.com\">email</a>."});
-  });
+  }
+  function next(){if(!valid(steps[i]))return;if(i===N-1)submit();else go(i+1,true)}
+  f.addEventListener('submit',function(e){e.preventDefault();next()});
+  back.addEventListener('click',function(){go(i-1,true)});
+  // tapping an option moves on by itself; keyboard users press Next so arrow keys can browse the choices
+  [].forEach.call(f.querySelectorAll('input[type=radio]'),function(r){r.addEventListener('click',function(e){steps[i].classList.remove('bad');if(e.detail>0)setTimeout(function(){next()},220)})});
+  [].forEach.call(f.querySelectorAll('input[type=text],input[type=email]'),function(el){el.addEventListener('input',function(){steps[i].classList.remove('bad')})});
+  go(0,false);
 })();
 </script>
 
