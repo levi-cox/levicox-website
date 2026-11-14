@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Find your program | Levi Cox Fitness</title>
+<meta name="description" content="Answer 3 quick questions and get the Levi Cox Fitness training program that fits your goal and your week.">
+<meta name="theme-color" content="#111111">
+<link rel="canonical" href="https://levicox.com/quiz/">
+<meta property="og:title" content="Find your program | Levi Cox Fitness">
+<meta property="og:description" content="3 quick questions. The right program for your goal and your week.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://levicox.com/images/v2/squat.jpg">
+<link rel="icon" href="../favicon.ico" sizes="48x48">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#111111;--bone:#F2F0EB;--signal:#FF5B1F;--stone:#E6E3DA;--rule:#3A3A3A;--mut:#3B3832;--inkmut:#B9B5AB;--signal-ink:#D9430C;
+--ease-out:cubic-bezier(.22,1,.36,1);--ease-io:cubic-bezier(.65,0,.35,1);--spring:cubic-bezier(.34,1.56,.64,1);--t-micro:180ms;--r:8px;
+--sh1:0 1px 2px rgba(0,0,0,.14),0 3px 8px rgba(0,0,0,.08)}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bone);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px}
+.d{font-family:'Archivo',system-ui,sans-serif;font-weight:800;text-transform:uppercase;line-height:.95;margin:0}
+.lab{font-family:'Archivo',system-ui,sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.18em;font-size:11px}
+.mut{color:var(--mut)}
+.head{display:flex;align-items:center;justify-content:space-between;padding-top:18px;padding-bottom:18px}
+.head img{height:48px;width:auto}
+.head a.back{font-weight:500;font-size:15px;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+.head a.back:hover{text-decoration:underline;text-decoration-color:var(--signal);text-decoration-thickness:2px;text-underline-offset:6px}
+.btn{display:flex;align-items:center;justify-content:center;height:56px;min-height:44px;padding:0 28px;border-radius:var(--r);font-family:'Archivo',system-ui,sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:15px;text-decoration:none;cursor:pointer;border:0;background:none;color:inherit;
+transition:background-color var(--t-micro) var(--ease-io),color var(--t-micro) var(--ease-io),transform var(--t-micro) var(--spring),box-shadow var(--t-micro) var(--ease-out)}
+.btn-hero{background:var(--signal);color:var(--ink)}
+.btn-ghost{border:1.5px solid var(--ink)}
+.btn-ghost-ink{border:1.5px solid var(--bone);color:var(--bone)}
+.btn .arr{margin-left:10px;transition:transform var(--t-micro) var(--spring)}
+@media (hover:hover){.btn:hover{transform:translateY(-2px);box-shadow:var(--sh1)}.btn:hover .arr{transform:translateX(5px)}.btn-hero:hover{background:#ff7340}.btn-ghost:hover{background:var(--ink);color:var(--bone)}.btn-ghost-ink:hover{background:var(--bone);color:var(--ink)}}
+.btn:active{transform:translateY(1px) scale(1.02,.95)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--signal);outline-offset:3px}
+[tabindex="-1"]:focus{outline:none}
+.progress{height:6px;background:var(--stone);border-radius:3px;overflow:hidden;margin:8px 0 36px}
+.progress i{display:block;height:100%;width:0;background:var(--signal);transition:width 320ms var(--ease-out)}
+.stepno{margin-bottom:14px}
+h1.d,h2.d{font-size:clamp(36px,9vw,64px)}
+.sub{margin-top:14px;font-size:17px}
+.opts{display:grid;gap:12px;margin:32px 0 0;padding:0;list-style:none}
+.opt{width:100%;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px;padding:14px 22px;border:1.5px solid var(--ink);border-radius:var(--r);background:transparent;color:var(--ink);font:inherit;cursor:pointer;
+transition:background-color var(--t-micro) var(--ease-io),color var(--t-micro) var(--ease-io),transform var(--t-micro) var(--spring)}
+.opt b{display:block;font-family:'Archivo',system-ui,sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.04em;font-size:17px}
+.opt span.s{display:block;font-size:14px;color:var(--mut);margin-top:2px}
+.opt .arr{font-family:'Archivo',sans-serif;font-weight:800}
+@media (hover:hover){.opt:hover{background:var(--ink);color:var(--bone)}.opt:hover span.s{color:var(--inkmut)}}
+.opt:active{transform:scale(.99)}
+.nav2{margin-top:28px}
+.linkbtn{background:none;border:0;padding:0;font:inherit;font-weight:600;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px;text-decoration-color:var(--signal);cursor:pointer;min-height:44px;color:var(--ink)}
+.card{background:var(--ink);color:var(--bone);border-radius:12px;padding:32px 28px;margin-top:28px}
+.card .lab{color:var(--signal)}
+.card h2{font-size:clamp(32px,8vw,52px);margin:10px 0 8px}
+.card p{margin:0}
+.card .tag{font-size:18px;color:var(--inkmut)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}
+.chip{border:1px solid var(--rule);border-radius:999px;padding:6px 14px;font-family:'Archivo',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:12px}
+.week{margin:18px 0 0;padding:0;list-style:none;border-top:1px solid var(--rule)}
+.week li{display:flex;gap:14px;padding:11px 0;border-bottom:1px solid var(--rule);font-size:15px}
+.week li span{font-family:'Archivo',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--signal);min-width:48px;padding-top:3px}
+.blurb{margin-top:20px;color:var(--inkmut)}
+.note{margin-top:20px;padding:14px 16px;border-left:3px solid var(--signal);background:rgba(255,91,31,.1);font-size:15px;color:var(--bone)}
+.cta{display:grid;gap:12px;margin-top:26px}
+.alt{margin-top:28px;padding:20px 22px;border:1.5px solid var(--ink);border-radius:var(--r)}
+.alt p{margin:6px 0 12px}
+.foot{padding:48px 24px 56px;font-size:14px}
+noscript .wrap{padding-top:20px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="wrap head">
+<a href="../" aria-label="Levi Cox Fitness, home"><img src="../images/v2/lockup.svg" alt="Levi Cox Fitness" width="484" height="165"></a>
+<a class="back" href="../">Back to site</a>
+</header>
+<main class="wrap" id="app" aria-live="polite">
+<noscript>
+<h1 class="d">Find your program</h1>
+<p class="mut sub">This quiz needs JavaScript. You can browse every program on my <a href="https://stan.store/levicox">Stan Store</a>.</p>
+</noscript>
+</main>
+<footer class="wrap foot mut">Levi Cox Fitness · <a href="https://instagram.com/levi_cox">@levi_cox</a> · Training at your own risk. Check with your doctor before starting a new program.</footer>
+<script>
+const STORE = "https://stan.store/levicox";
+const APP = "https://app.levicox.com";
+/* One entry per goal and days-per-week. Paste the Stan Store URL for each PDF into "stan" (blank falls back to the store page). */
+const PROGRAMS = {
+ "muscle-2": {
+  "slug": "build-muscle-2-day",
+  "title": "Build Muscle: 2-Day Full Body",
+  "tagline": "Two days. Full body. Real muscle.",
+  "level": "beginner",
+  "weeks": 8,
+  "days": 2,
+  "minutes": 75,
+  "tier": "free",
+  "week": [
+   "Full Body A",
+   "Full Body B"
+  ],
+  "blurb": "Two days a week is enough to build real muscle if you make both sessions count, and this program is built around that.",
+  "stan": null
+ },
+ "muscle-3": {
+  "slug": "build-muscle-3-day",
+  "title": "Build Muscle: 3-Day Full Body",
+  "tagline": "Three days. Learn the big lifts. Build the base.",
+  "level": "beginner",
+  "weeks": 8,
+  "days": 3,
+  "minutes": 65,
+  "tier": "free",
+  "week": [
+   "Squat + Press",
+   "Hinge + Pull",
+   "Legs + Shoulders + Arms"
+  ],
+  "blurb": "Three full-body days a week hits every muscle roughly twice, which is the frequency that builds muscle fastest for most beginners.",
+  "stan": null
+ },
+ "muscle-4": {
+  "slug": "build-muscle-4-day",
+  "title": "Build Muscle: 4-Day Upper/Lower",
+  "tagline": "Four days. Heavy and high-volume. Upper/lower.",
+  "level": "intermediate",
+  "weeks": 10,
+  "days": 4,
+  "minutes": 60,
+  "tier": "pro",
+  "week": [
+   "Upper Heavy",
+   "Lower Heavy",
+   "Upper Volume",
+   "Lower Volume"
+  ],
+  "blurb": "This is the classic upper and lower split built properly: two heavy days where you chase strength on the big lifts with a top set and back-offs, and two higher-rep volume days where you chase the pump and the stretch.",
+  "stan": "https://stan.store/levicox/p/build-muscle-4day-upperlower"
+ },
+ "muscle-5": {
+  "slug": "build-muscle-5-day",
+  "title": "Build Muscle: 5-Day Body-Part Split",
+  "tagline": "Five days. Body-part split. Maximum volume.",
+  "level": "intermediate",
+  "weeks": 12,
+  "days": 5,
+  "minutes": 55,
+  "tier": "pro",
+  "week": [
+   "Push",
+   "Pull",
+   "Quads + Calves",
+   "Delts + Arms + Chest Pump",
+   "Hamstrings + Glutes + Back"
+  ],
+  "blurb": "Five days a week lets you give each muscle group its own session with enough volume to drive growth, and this split is built around that: push, pull, quads and calves, a delts, arms and chest-pump day, and a hamstrings, glutes and back day.",
+  "stan": "https://stan.store/levicox/p/build-muscle-5day-bodypart-split"
+ },
+ "general-2": {
+  "slug": "general-fitness-2-day",
+  "title": "General Fitness: 2-Day Full Body",
+  "tagline": "Two days. The basics, done well.",
+  "level": "beginner",
+  "weeks": 8,
+  "days": 2,
+  "minutes": 60,
+  "tier": "free",
+  "week": [
+   "Full Body A",
+   "Full Body B"
+  ],
+  "blurb": "Two days a week is a solid base for general health if you spend it on the basics: a squat, a hinge, a push, a pull and a carry in every session, plus a little cardio and mobility to keep you moving well.",
+  "stan": null
+ },
+ "general-3": {
+  "slug": "general-fitness-3-day",
+  "title": "General Fitness: 3-Day Strength + Move",
+  "tagline": "Three days. Strong, fit and mobile.",
+  "level": "beginner",
+  "weeks": 8,
+  "days": 3,
+  "minutes": 65,
+  "tier": "free",
+  "week": [
+   "Strength A",
+   "Strength B",
+   "Move Day"
+  ],
+  "blurb": "Three days a week gives a well-rounded fitness week: two strength days that cover the whole body and a move day that mixes a circuit, steady cardio and mobility.",
+  "stan": null
+ },
+ "general-5": {
+  "slug": "general-fitness-5-day",
+  "title": "General Fitness: 5-Day Strength + Conditioning",
+  "tagline": "Five days. Strength, engine and mobility.",
+  "level": "intermediate",
+  "weeks": 12,
+  "days": 5,
+  "minutes": 55,
+  "tier": "pro",
+  "week": [
+   "Upper Strength",
+   "Lower Strength",
+   "Steady State + Mobility",
+   "Full Body Circuit",
+   "Athletic Pump"
+  ],
+  "blurb": "Five days a week gives you the full general-fitness package: two strength days, a steady-state and mobility day, a full-body circuit day and an athletic pump day with carries and single-leg work.",
+  "stan": "https://stan.store/levicox/p/general-fitness-5day-strength--conditioning"
+ },
+ "strength-2": {
+  "slug": "get-stronger-2-day",
+  "title": "Get Stronger: 2-Day Barbell Basics",
+  "tagline": "Two days. Four lifts. Add weight.",
+  "level": "beginner",
+  "weeks": 8,
+  "days": 2,
+  "minutes": 75,
+  "tier": "free",
+  "week": [
+   "Squat + Bench",
+   "Deadlift + Press"
+  ],
+  "blurb": "Two days a week is enough to get properly strong if you spend it on the four lifts that matter: squat, bench press, deadlift and overhead press.",
+  "stan": null
+ },
+ "strength-3": {
+  "slug": "get-stronger-3-day",
+  "title": "Get Stronger: 3-Day Barbell Basics",
+  "tagline": "Three days. Big lifts first. Stronger every week.",
+  "level": "beginner",
+  "weeks": 8,
+  "days": 3,
+  "minutes": 65,
+  "tier": "free",
+  "week": [
+   "Squat + Bench",
+   "Deadlift + Press",
+   "Volume + Pull"
+  ],
+  "blurb": "Three days a week gives the squat, bench, deadlift and press the frequency they need, with a third day for volume and pulling that builds the support muscles behind the big lifts.",
+  "stan": null
+ },
+ "strength-4": {
+  "slug": "get-stronger-4-day",
+  "title": "Get Stronger: 4-Day Strength Cycle",
+  "tagline": "Four days. One main lift each. Test your best triple.",
+  "level": "intermediate",
+  "weeks": 10,
+  "days": 4,
+  "minutes": 60,
+  "tier": "pro",
+  "week": [
+   "Squat",
+   "Bench",
+   "Deadlift",
+   "Overhead Press"
+  ],
+  "blurb": "This is a proper strength cycle built around one big lift per day: squat on day 1, bench on day 2, deadlift on day 3 and overhead press on day 4.",
+  "stan": "https://stan.store/levicox/p/get-stronger-4day-strength-cycle"
+ },
+ "strength-5": {
+  "slug": "get-stronger-5-day",
+  "title": "Get Stronger: 5-Day Strength Cycle",
+  "tagline": "Five days. Full strength cycle. Test your best triple.",
+  "level": "intermediate",
+  "weeks": 12,
+  "days": 5,
+  "minutes": 55,
+  "tier": "pro",
+  "week": [
+   "Squat",
+   "Bench",
+   "Deadlift",
+   "Overhead Press",
+   "Volume Day"
+  ],
+  "blurb": "Five days gives each of the big lifts a dedicated session and adds a volume day to keep the technique sharp while the heavy days stay heavy.",
+  "stan": "https://stan.store/levicox/p/get-stronger-5day-strength-cycle"
+ },
+ "hybrid-2": {
+  "slug": "hybrid-performance-2-day",
+  "title": "Hybrid Performance: 2-Day Lift + Run",
+  "tagline": "Two days. One lift, one run. Build the engine.",
+  "level": "beginner",
+  "weeks": 8,
+  "days": 2,
+  "minutes": 75,
+  "tier": "free",
+  "week": [
+   "Strength + Easy Run",
+   "Intervals + Carries"
+  ],
+  "blurb": "Two days a week is enough to get started on the hybrid athlete path if one day is a lift followed by an easy run and the other is a run workout with carries and a bit of lower-body work.",
+  "stan": null
+ },
+ "hybrid-3": {
+  "slug": "hybrid-performance-3-day",
+  "title": "Hybrid Performance: 3-Day Lift + Run + Conditioning",
+  "tagline": "Three days. Lift, circuit, run. Be able to do both.",
+  "level": "beginner",
+  "weeks": 8,
+  "days": 3,
+  "minutes": 65,
+  "tier": "free",
+  "week": [
+   "Lower Strength + Easy Run",
+   "Upper Strength + Circuit",
+   "Intervals + Sled + Mobility"
+  ],
+  "blurb": "Three days a week covers the three jobs a hybrid athlete has to do: a lower-body strength day with an easy run, an upper-body strength day with a short circuit and a run-focused day with intervals and sled work.",
+  "stan": null
+ },
+ "hybrid-4": {
+  "slug": "hybrid-performance-4-day",
+  "title": "Hybrid Performance: 4-Day Strength + Run",
+  "tagline": "Four days. Two lifts, two runs. Strong and fast.",
+  "level": "intermediate",
+  "weeks": 10,
+  "days": 4,
+  "minutes": 60,
+  "tier": "pro",
+  "week": [
+   "Lower Strength",
+   "Run Intervals",
+   "Upper Strength + Carries",
+   "Long Easy Run + Mobility"
+  ],
+  "blurb": "This is a hybrid week with two strength days and two run days, spaced so the hard runs and the hard lifts do not collide.",
+  "stan": "https://stan.store/levicox/p/hybrid-performance-4day-strength--run"
+ },
+ "hybrid-5": {
+  "slug": "hybrid-performance-5-day",
+  "title": "Hybrid Performance: 5-Day Strength + Run",
+  "tagline": "Five days. Two lifts, three runs. A full hybrid week.",
+  "level": "intermediate",
+  "weeks": 12,
+  "days": 5,
+  "minutes": 55,
+  "tier": "pro",
+  "week": [
+   "Lower Strength",
+   "Easy Run + Upper Pump",
+   "Tempo Run + Core",
+   "Upper Strength + Sled",
+   "Long Run + Mobility"
+  ],
+  "blurb": "This is the full hybrid week: two strength days, three run days and a lot of work capacity.",
+  "stan": "https://stan.store/levicox/p/hybrid-performance-5day-strength--run"
+ },
+ "fat-2": {
+  "slug": "lose-fat-2-day",
+  "title": "Lose Fat: 2-Day Lift + Burn",
+  "tagline": "Two days. Lift, then burn. Pair it with steps.",
+  "level": "beginner",
+  "weeks": 8,
+  "days": 2,
+  "minutes": 75,
+  "tier": "free",
+  "week": [
+   "Full Body + Steady State",
+   "Full Body + Intervals"
+  ],
+  "blurb": "Two days a week can start a fat-loss phase if each session pulls double duty: lift to hold on to the muscle you have and finish with cardio that burns calories.",
+  "stan": null
+ },
+ "fat-3": {
+  "slug": "lose-fat-3-day",
+  "title": "Lose Fat: 3-Day Lift + Circuit",
+  "tagline": "Three days. Strength, circuit, intervals. Lean out.",
+  "level": "beginner",
+  "weeks": 8,
+  "days": 3,
+  "minutes": 65,
+  "tier": "free",
+  "week": [
+   "Full Body Strength",
+   "Metabolic Circuit",
+   "Full Body + Intervals"
+  ],
+  "blurb": "Three days a week gives you a full fat-loss week: a straight strength day to protect your muscle, a circuit day that keeps your heart rate high and an interval day to finish.",
+  "stan": null
+ },
+ "fat-4": {
+  "slug": "lose-fat-4-day",
+  "title": "Lose Fat: 4-Day Strength + Conditioning",
+  "tagline": "Four days. Keep muscle. Burn fat.",
+  "level": "intermediate",
+  "weeks": 10,
+  "days": 4,
+  "minutes": 60,
+  "tier": "pro",
+  "week": [
+   "Upper Strength + Steady State",
+   "Lower Strength + Sled",
+   "Conditioning",
+   "Full Body Density + Walk"
+  ],
+  "blurb": "This is a fat-loss week built from four different jobs: an upper-body strength day that keeps your muscle and ends with steady-state cardio, a lower-body strength day that finishes with sled pushes, a conditioning day with a four-exercise circuit and bike intervals and a full-body density day with paired supersets and an incline walk.",
+  "stan": "https://stan.store/levicox/p/lose-fat-4day-strength--conditioning"
+ },
+ "fat-5": {
+  "slug": "lose-fat-5-day",
+  "title": "Lose Fat: 5-Day Strength + Conditioning",
+  "tagline": "Five days. Lift, burn, repeat. Built for a cut.",
+  "level": "intermediate",
+  "weeks": 12,
+  "days": 5,
+  "minutes": 50,
+  "tier": "pro",
+  "week": [
+   "Upper",
+   "Lower",
+   "Steady State + Mobility",
+   "Full Body Density",
+   "Intervals + Carries"
+  ],
+  "blurb": "Five days a week gives you the full recipe for a fat-loss phase: two strength days to protect your muscle, a steady-state day with mobility for low-cost calorie burn, a density day with paired supersets and sled work and an interval day with carries and a little arm work.",
+  "stan": "https://stan.store/levicox/p/lose-fat-5day-strength--conditioning"
+ },
+ "general-4": {
+  "slug": "foundations",
+  "title": "Foundations",
+  "tagline": "The free 4-day base program.",
+  "level": "beginner",
+  "weeks": null,
+  "days": 4,
+  "minutes": null,
+  "tier": "free",
+  "week": [],
+  "blurb": "A simple 4-day program that covers your whole body and builds the habit. It is the base program in the Levi Cox Fitness app, and it is free.",
+  "stan": null
+ }
+};
+
+const Q = [
+  { key: "goal", n: "Question 1 of 3", title: "What's your main goal?", sub: "Pick the one that matters most right now.", opts: [
+    ["muscle", "Build muscle", "Add size and shape"], ["strength", "Get stronger", "Chase a bigger squat, bench and deadlift"],
+    ["fat", "Lose fat", "Lean out and keep your muscle"], ["hybrid", "Hybrid performance", "Lift heavy and run well"], ["general", "General fitness", "Feel strong, fit and mobile"]] },
+  { key: "days", n: "Question 2 of 3", title: "How many days a week can you train?", sub: "Be honest. The best program is the one you finish.", opts: [
+    ["2", "2 days", "Short and focused"], ["3", "3 days", "The sweet spot for most people"], ["4", "4 days", "Serious training"], ["5", "5 days", "Maximum volume"]] },
+  { key: "exp", n: "Question 3 of 3", title: "How long have you trained consistently?", sub: "Consistently means most weeks, with a plan.", opts: [
+    ["new", "Under a year", "New, or coming back after a break"], ["vet", "A year or more", "You know your way around a gym"]] },
+];
+const GOALNAME = { muscle: "Build muscle", strength: "Get stronger", fat: "Lose fat", hybrid: "Hybrid performance", general: "General fitness" };
+const el = document.getElementById("app");
+let step = 0; const ans = {};
+
+function h(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+function focusHeading() { const t = el.querySelector("[data-focus]"); if (t) { t.setAttribute("tabindex", "-1"); t.focus({ preventScroll: false }); } }
+
+function render() {
+  if (step >= Q.length) return result(pick());
+  const q = Q[step];
+  el.innerHTML = `
+    <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="${Q.length}" aria-valuenow="${step}" aria-label="Quiz progress"><i style="width:${(step / Q.length) * 100}%"></i></div>
+    <div class="lab stepno">${q.n}</div>
+    <h1 class="d" data-focus>${h(q.title)}</h1>
+    <p class="mut sub">${h(q.sub)}</p>
+    <ul class="opts">${q.opts.map(o => `<li><button type="button" class="opt" data-v="${o[0]}"><span><b>${h(o[1])}</b><span class="s">${h(o[2])}</span></span><span class="arr" aria-hidden="true">→</span></button></li>`).join("")}</ul>
+    ${step > 0 ? '<div class="nav2"><button type="button" class="linkbtn" id="back">Back</button></div>' : ""}`;
+  el.querySelectorAll(".opt").forEach(b => b.addEventListener("click", () => { ans[q.key] = b.dataset.v; step++; render(); }));
+  const back = document.getElementById("back"); if (back) back.addEventListener("click", () => { step--; render(); });
+  if (step > 0) focusHeading();
+}
+
+/* Pick the primary match and an alternative from goal, days and experience. */
+function pick() {
+  const g = ans.goal, d = +ans.days, vet = ans.exp === "vet";
+  const get = n => PROGRAMS[g + "-" + n];
+  let main = get(d), alt = null, note = "";
+  if (!vet && d >= 4 && g !== "general") {
+    main = get(3); alt = get(d);
+    note = `You can train ${d} days, but the ${d}-day programs are written for people with a year or more of training. Start with this 3-day, use the other days for walking or easy cardio, and step up to the ${d}-day once the weights are moving well.`;
+  } else if (!vet && d === 5 && g === "general") {
+    main = get(3); alt = get(5);
+    note = "The 5-day is built for people with a year or more of training. Start here and step up when you are ready.";
+  } else if (vet && d <= 3) {
+    alt = get(4);
+    note = `These are the right sessions for a ${d}-day week. They are beginner-friendly, so push the weights harder than the notes suggest. If you can find a fourth day, the 4-day is the step up.`;
+  } else if (vet && d === 4 && g === "general") {
+    alt = get(5);
+  } else if (d <= 3) {
+    alt = get(d + 1);
+  } else if (d === 4) {
+    alt = get(5);
+  } else {
+    alt = get(4);
+  }
+  return { main, alt, note, d };
+}
+
+function card(p, isAlt) {
+  const meta = [p.level === "beginner" ? "Beginner" : "Intermediate", p.weeks ? p.weeks + " weeks" : null, p.days + " days a week", p.minutes ? "About " + p.minutes + " min" : null].filter(Boolean);
+  const pdf = p.stan === null ? "" : `<a class="btn btn-hero" href="${h(p.stan || STORE)}" target="_blank" rel="noopener">Get the PDF<span class="arr" aria-hidden="true">→</span></a>`;
+  const inApp = p.tier === "free"
+    ? `<a class="btn btn-ghost-ink" href="${APP}" target="_blank" rel="noopener">${p.stan === null ? "Start free in the app" : "Or follow it free in the app"}<span class="arr" aria-hidden="true">→</span></a>`
+    : `<a class="btn btn-ghost-ink" href="${APP}" target="_blank" rel="noopener">Also in the app with Pro<span class="arr" aria-hidden="true">→</span></a>`;
+  return `<div class="card">
+    <div class="lab">${isAlt ? "Step-up option" : "Your match"}</div>
+    <h2 class="d">${h(p.title)}</h2>
+    <p class="tag">${h(p.tagline)}</p>
+    <div class="chips">${meta.map(m => `<span class="chip">${h(m)}</span>`).join("")}</div>
+    <p class="blurb" style="margin-top:0;color:var(--bone)">${h(p.blurb)}</p>
+    ${p.week.length ? `<ul class="week" aria-label="Your training week">${p.week.map((t, i) => `<li><span>Day ${i + 1}</span>${h(t)}</li>`).join("")}</ul>` : ""}
+    <div class="cta">${pdf}${inApp}</div>
+  </div>`;
+}
+
+function result({ main, alt, note, d }) {
+  el.innerHTML = `
+    <div class="progress" aria-hidden="true"><i style="width:100%"></i></div>
+    <div class="lab stepno">Your result</div>
+    <h1 class="d" data-focus>Your ${GOALNAME[ans.goal].toLowerCase()} program</h1>
+    <p class="mut sub">Based on your goal, your ${d}-day week and your training history.</p>
+    ${note ? `<div class="note" style="background:var(--ink);margin-top:24px">${h(note)}</div>` : ""}
+    ${card(main, false)}
+    ${alt ? `<div class="alt"><div class="lab">${alt.days > main.days ? "Ready for more?" : "Prefer a different schedule?"}</div><p><b>${h(alt.title)}</b>. ${alt.days} days a week${alt.minutes ? ", about " + alt.minutes + " minutes a session" : ""}.</p><button type="button" class="linkbtn" id="showalt">See this program</button></div><div id="altslot"></div>` : ""}
+    <div class="nav2"><button type="button" class="linkbtn" id="retake">Retake the quiz</button> &nbsp;·&nbsp; <a class="linkbtn" href="${STORE}" target="_blank" rel="noopener">Browse every program</a></div>`;
+  const sa = document.getElementById("showalt"); if (sa) sa.addEventListener("click", () => { document.getElementById("altslot").innerHTML = card(alt, true); sa.remove(); });
+  document.getElementById("retake").addEventListener("click", () => { step = 0; for (const k in ans) delete ans[k]; render(); window.scrollTo({ top: 0 }); });
+  focusHeading();
+}
+render();
+</script>
+</body>
+</html>
