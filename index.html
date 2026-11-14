@@ -458,12 +458,25 @@ p{margin:0}
     back.hidden=n===0;bt.textContent=n===N-1?'Send enquiry':'Next';msg.hidden=true;
     if(focus){var t=steps[n].querySelector('input[type=text],input[type=email],textarea');(t||steps[n].querySelector('.q')).focus({preventScroll:true})}
   }
+  function mailto(){
+    var d=new FormData(f),g=function(k){return d.get(k)||'-'};
+    var body='Name: '+g('name')+'\nEmail: '+g('email')+'\nBased in: '+g('location')+'\nMain goal: '+g('goal')+'\nDays a week: '+g('days')+'\nNotes: '+g('note');
+    return 'mailto:levicoxfitness@gmail.com?subject='+encodeURIComponent('New enquiry from levicox.com')+'&body='+encodeURIComponent(body);
+  }
+  function fail(why){
+    console.error('Enquiry not sent:',why);
+    btn.classList.remove('is-busy');msg.hidden=false;
+    msg.innerHTML="That didn't send. <a href=\""+mailto()+"\">Send these answers by email instead</a>, or reach me on <a href=\"https://wa.me/61404263024\">WhatsApp</a>.";
+  }
   function submit(){
     btn.classList.add('is-busy');
     fetch('https://formsubmit.co/ajax/levicoxfitness@gmail.com',{method:'POST',headers:{'Accept':'application/json'},body:new FormData(f)})
-      .then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})
-      .then(function(j){if(j.success===false||j.success==='false')throw new Error('rejected');f.hidden=true;ok.hidden=false;ok.focus()})
-      .catch(function(){btn.classList.remove('is-busy');msg.hidden=false;msg.innerHTML="That didn't send. Your answers are still here, so try again, or reach me on <a href=\"https://wa.me/61404263024\">WhatsApp</a> or <a href=\"mailto:levicoxfitness@gmail.com\">email</a>."});
+      .then(function(r){return r.json().catch(function(){return {}}).then(function(j){return {ok:r.ok,status:r.status,j:j}})})
+      .then(function(x){
+        if(!x.ok||x.j.success===false||x.j.success==='false'){fail(x.status+' '+(x.j.message||''));return}
+        f.hidden=true;ok.hidden=false;ok.focus();
+      })
+      .catch(fail);
   }
   function next(){if(!valid(steps[i]))return;if(i===N-1)submit();else go(i+1,true)}
   f.addEventListener('submit',function(e){e.preventDefault();next()});
