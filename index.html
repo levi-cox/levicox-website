@@ -139,6 +139,24 @@ p{margin:0}
 .contact .wrap{padding-top:64px;padding-bottom:64px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
 .contact h2{font-size:48px}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form{display:flex;flex-direction:column;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{color:var(--inkmut)}
+.field input,.field select,.field textarea{width:100%;min-height:52px;padding:0 16px;background:#1B1B1B;color:var(--bone);border:1.5px solid var(--rule);border-radius:var(--r);font:inherit;font-size:16px;transition:border-color var(--t-micro) var(--ease-io),box-shadow var(--t-micro) var(--ease-out)}
+.field textarea{padding:14px 16px;min-height:120px;resize:vertical;line-height:1.5}
+.field select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--inkmut) 50%),linear-gradient(135deg,var(--inkmut) 50%,transparent 50%);background-position:calc(100% - 22px) 50%,calc(100% - 16px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:44px}
+.field input::placeholder,.field textarea::placeholder{color:#8B877D}
+.field input:hover,.field select:hover,.field textarea:hover{border-color:#5A5A5A}
+.field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible{outline:none;border-color:var(--signal);box-shadow:0 0 0 3px rgba(255,91,31,.35)}
+.field.bad input,.field.bad select,.field.bad textarea{border-color:#FF8A6B}
+.field .err{display:none;font-size:14px;color:#FF9C80}
+.field.bad .err{display:block}
+.form-msg{font-size:15px;line-height:1.5;padding:14px 16px;border-radius:var(--r);border:1.5px solid #FF8A6B;color:var(--bone)}
+.form-msg a{text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--signal)}
+.form-ok{padding:28px 0}
+.form-ok h3{font-size:34px}
+.form-ok p{margin-top:12px;max-width:420px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .foot{border-top:1px solid #2A2A2A}
 .foot .wrap{padding-top:20px;padding-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:13px}
 .foot img{height:28px;width:28px}
@@ -332,13 +350,22 @@ p{margin:0}
 <div class="stack rv" style="gap:16px">
 <h2 class="d">Ready to start?<br><span class="orange">Tell me your goal.</span></h2>
 <p class="inkmut" style="max-width:420px">Say where you're based and what you want to change. I'll reply with next steps.</p>
+<p class="inkmut row-links" style="font-size:15px"><span>Or message me directly:</span> <a class="lnk lnk-block" href="https://wa.me/61404263024">WhatsApp</a> <a class="lnk lnk-block" href="https://instagram.com/levi_cox">Instagram DM</a> <a class="lnk lnk-block" href="mailto:levicoxfitness@gmail.com">Email</a></p>
 </div>
-<div class="stack rv rv-img" style="gap:10px">
-<a class="btn btn-hero" href="https://wa.me/61404263024">WhatsApp +61 404 263 024</a>
-<div class="pair">
-<a class="btn btn-ghost-ink" href="https://instagram.com/levi_cox">Instagram DM</a>
-<a class="btn btn-ghost-ink" href="mailto:levicoxfitness@gmail.com">Email</a>
-</div>
+<div class="rv rv-img">
+<form class="form" id="enquiry" novalidate action="https://formsubmit.co/levicoxfitness@gmail.com" method="POST">
+<div class="field"><label class="lab" for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Your name"><span class="err">Enter your name.</span></div>
+<div class="field"><label class="lab" for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com"><span class="err">Enter an email I can reply to.</span></div>
+<div class="field"><label class="lab" for="f-where">Where are you based?</label><select id="f-where" name="location" required><option value="">Choose one</option><option>Miami</option><option>Melbourne (from January)</option><option>Somewhere else</option></select><span class="err">Choose where you're based.</span></div>
+<div class="field"><label class="lab" for="f-goal">Your goal</label><textarea id="f-goal" name="goal" required placeholder="What do you want to change, and how many days a week can you train?"></textarea><span class="err">Tell me a little about your goal.</span></div>
+<div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label></div>
+<input type="hidden" name="_subject" value="New enquiry from levicox.com">
+<input type="hidden" name="_template" value="table">
+<input type="hidden" name="_captcha" value="false">
+<div class="form-msg" id="form-msg" role="alert" hidden></div>
+<button class="btn btn-hero" type="submit" id="send">Send enquiry<span class="arr" aria-hidden="true">→</span></button>
+</form>
+<div class="form-ok" id="form-ok" hidden tabindex="-1"><h3 class="d">Got it.<br><span class="orange">I'll be in touch.</span></h3><p class="inkmut">Thanks for the details. I'll reply to your email with next steps.</p></div>
 </div>
 </div>
 </section>
@@ -382,6 +409,28 @@ p{margin:0}
     new IntersectionObserver(function(es){heroIn=es[0].isIntersecting;upd()}).observe(hero);
     guards.forEach(function(g,i){new IntersectionObserver(function(es){busy[i]=es[0].isIntersecting;upd()}).observe(g)});
   }
+})();
+</script>
+
+<script>
+(function(){
+  var f=document.getElementById('enquiry'); if(!f)return;
+  var msg=document.getElementById('form-msg'),btn=document.getElementById('send'),ok=document.getElementById('form-ok');
+  function check(el){var f=el.closest('.field'),bad=!el.checkValidity();f.classList.toggle('bad',bad);return !bad}
+  [].forEach.call(f.querySelectorAll('input[required],select[required],textarea[required]'),function(el){
+    el.addEventListener('blur',function(){if(el.value||el.closest('.field').classList.contains('bad'))check(el)});
+    el.addEventListener('input',function(){if(el.closest('.field').classList.contains('bad'))check(el)});
+  });
+  f.addEventListener('submit',function(e){
+    e.preventDefault(); msg.hidden=true;
+    var first=null; [].forEach.call(f.querySelectorAll('[required]'),function(el){if(!check(el)&&!first)first=el});
+    if(first){first.focus();return}
+    btn.classList.add('is-busy');
+    fetch('https://formsubmit.co/ajax/levicoxfitness@gmail.com',{method:'POST',headers:{'Accept':'application/json'},body:new FormData(f)})
+      .then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})
+      .then(function(j){if(j.success===false||j.success==='false')throw new Error('rejected');f.hidden=true;ok.hidden=false;ok.focus()})
+      .catch(function(){btn.classList.remove('is-busy');msg.hidden=false;msg.innerHTML="That didn't send. Your answers are still here, so try again, or reach me on <a href=\"https://wa.me/61404263024\">WhatsApp</a> or <a href=\"mailto:levicoxfitness@gmail.com\">email</a>."});
+  });
 })();
 </script>
 
