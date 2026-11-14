@@ -31,7 +31,7 @@
 --t-micro:180ms;--t-macro:480ms;--r:8px;
 --sh1:0 1px 2px rgba(0,0,0,.14),0 3px 8px rgba(0,0,0,.08);--sh2:0 2px 4px rgba(0,0,0,.14),0 12px 28px rgba(0,0,0,.16)}
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:4rem}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:96px}
 body{margin:0;overflow-x:clip;background:var(--bone);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%;height:auto}
 a{color:inherit}
@@ -86,6 +86,23 @@ p{margin:0}
 .nav{display:flex;align-items:center;gap:20px}
 .nav a:not(.btn){display:inline-flex;align-items:center;min-height:44px;padding:0 8px;text-decoration:none;font-weight:500;font-size:15px}
 .nav a:not(.btn):hover{text-decoration:underline;text-decoration-color:var(--signal);text-decoration-thickness:2px;text-underline-offset:6px}
+
+
+/* Sticky header */
+.site-head{position:sticky;top:0;z-index:40;background:var(--bone);border-bottom:1px solid transparent;transition:border-color var(--t-micro) var(--ease-io),box-shadow var(--t-micro) var(--ease-out)}
+.site-head.stuck{border-bottom-color:#CFCABE;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.menu-btn{display:none;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0 0 0 8px;margin-right:-4px;background:none;border:0;color:var(--ink);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.menu-btn i{position:relative;width:20px;height:2px;background:currentColor;transition:background-color var(--t-micro) var(--ease-io)}
+.menu-btn i::before,.menu-btn i::after{content:"";position:absolute;left:0;width:20px;height:2px;background:currentColor;transition:transform var(--t-micro) var(--ease-out)}
+.menu-btn i::before{top:-6px}.menu-btn i::after{top:6px}
+.menu-btn[aria-expanded="true"] i{background:transparent}
+.menu-btn[aria-expanded="true"] i::before{transform:translateY(6px) rotate(45deg)}
+.menu-btn[aria-expanded="true"] i::after{transform:translateY(-6px) rotate(-45deg)}
+.menu-btn:focus-visible{outline:3px solid var(--signal);outline-offset:3px}
+.menu-panel{border-top:1px solid #CFCABE;background:var(--bone);box-shadow:0 12px 24px rgba(0,0,0,.1)}
+.menu-panel[hidden]{display:none}
+.menu-panel a{display:flex;align-items:center;min-height:56px;font-family:'Archivo',system-ui,sans-serif;font-weight:800;text-transform:uppercase;font-size:20px;text-decoration:none;border-bottom:1px solid #CFCABE}
+.menu-panel a:last-child{border-bottom:0}
 
 /* Hero */
 .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;padding-top:16px;padding-bottom:56px}
@@ -208,6 +225,10 @@ p{margin:0}
   .head{padding-top:14px;padding-bottom:14px}
   .head img{height:44px}
   .nav a:not(.btn){display:none}
+  .menu-btn{display:inline-flex}
+  .head>a:first-child{flex:none}
+  .nav{margin-left:auto}
+  html{scroll-padding-top:76px}
   .hero,.training .wrap,.programs .wrap,.brands,.about .wrap,.contact .wrap{grid-template-columns:1fr;gap:28px}
   .hero{padding-bottom:32px;padding-top:8px;gap:20px}
   .hero h1{font-size:46px}
@@ -261,14 +282,26 @@ p{margin:0}
 </head>
 <body>
 
-<header class="wrap head">
+<header class="site-head" id="site-head">
+<div class="wrap head">
 <a href="#top" aria-label="Levi Cox Fitness, home"><img src="images/v2/lockup.svg" alt="Levi Cox Fitness" width="484" height="165"></a>
-<nav class="nav" aria-label="Main">
+<nav class="nav" id="site-nav" aria-label="Main">
 <a href="#training">Training</a>
 <a href="programs/">Programs</a>
 <a href="#about">About</a>
 <a class="btn btn-hero btn-sm" href="#contact">Book a session</a>
 </nav>
+<button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-menu"><i aria-hidden="true"></i></button>
+</div>
+<div class="menu-panel" id="site-menu" hidden>
+<div class="wrap">
+<a href="#training">Training</a>
+<a href="programs/">Programs</a>
+<a href="quiz/">Find your program</a>
+<a href="app/">App</a>
+<a href="#about">About</a>
+</div>
+</div>
 </header>
 
 <main id="top">
@@ -419,6 +452,16 @@ p{margin:0}
 <a class="btn btn-hero dock" href="#contact">Book personal training<span class="arr" aria-hidden="true">→</span></a>
 
 <script>
+(function(){
+  var sh=document.getElementById('site-head'),mb=sh&&sh.querySelector('.menu-btn'),mp=document.getElementById('site-menu');
+  function stuck(){sh.classList.toggle('stuck',window.scrollY>8)}
+  stuck();addEventListener('scroll',stuck,{passive:true});
+  function menu(open){mb.setAttribute('aria-expanded',open);mp.hidden=!open}
+  if(mb&&mp){mb.addEventListener('click',function(){menu(mb.getAttribute('aria-expanded')!=='true')});
+    mp.addEventListener('click',function(e){if(e.target.closest('a'))menu(false)});
+    addEventListener('keydown',function(e){if(e.key==='Escape'&&!mp.hidden){menu(false);mb.focus()}});
+    matchMedia('(min-width:861px)').addEventListener('change',function(){menu(false)});}
+})();
 (function(){
   var d=document,root=d.documentElement;
   // Scroll entrances (opacity/transform only, so no layout shift)
