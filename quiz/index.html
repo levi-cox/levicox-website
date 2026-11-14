@@ -14,6 +14,7 @@
 <link rel="icon" href="../favicon.ico" sizes="48x48">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="stylesheet" href="../site-chrome.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -80,9 +81,29 @@ noscript .wrap{padding-top:20px}
 </style>
 </head>
 <body>
-<header class="wrap head">
-<a href="../" aria-label="Levi Cox Fitness, home"><img src="../images/v2/lockup.svg" alt="Levi Cox Fitness" width="484" height="165"></a>
-<a class="back" href="../">Back to site</a>
+<header class="sh" id="site-head">
+<div class="sh-bar">
+<a class="sh-logo" href="../" aria-label="Levi Cox Fitness, home"><img src="../images/v2/lockup.svg" alt="Levi Cox Fitness" width="484" height="165"></a>
+<nav class="sh-nav" aria-label="Main">
+<a href="../#training">Training</a>
+<a href="../programs/">Programs</a>
+<a href="../app/">App</a>
+<a href="../#about">About</a>
+<a class="sh-book" href="../#contact">Book a session</a>
+</nav>
+<button class="sh-menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-menu"><i aria-hidden="true"></i></button>
+</div>
+<div class="sh-panel" id="site-menu" hidden>
+<div class="sh-panel-in">
+<a class="sh-link" href="../#training">Training</a>
+<a class="sh-link" href="../programs/">Programs</a>
+<a class="sh-link" href="../quiz/" aria-current="page">Find your program</a>
+<a class="sh-link" href="../app/">App</a>
+<a class="sh-link" href="../#about">About</a>
+<a class="sh-link" href="../#contact">Book a session</a>
+<ul class="sh-socials " aria-label="Levi Cox on social media"><li><a href="https://instagram.com/levi_cox" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".7" fill="currentColor"/></svg></a></li><li><a href="https://youtube.com/@levicoxfitness" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9l5 3-5 3z"/></svg></a></li><li><a href="https://wa.me/61404263024" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.6-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg></a></li><li><a href="mailto:levicoxfitness@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a></li><li><a href="https://stan.store/levicox" target="_blank" rel="noopener" aria-label="Stan Store" title="Stan Store"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l2 5H4z"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M9 12a3 3 0 0 0 6 0"/></svg></a></li></ul>
+</div>
+</div>
 </header>
 <main class="wrap" id="app" aria-live="polite">
 <noscript>
@@ -90,7 +111,9 @@ noscript .wrap{padding-top:20px}
 <p class="mut sub">This quiz needs JavaScript. You can browse every program on my <a href="https://stan.store/levicox">Stan Store</a>.</p>
 </noscript>
 </main>
-<footer class="wrap foot mut">Levi Cox Fitness · <a href="https://instagram.com/levi_cox">@levi_cox</a> · Training at your own risk. Check with your doctor before starting a new program.</footer>
+<footer class="wrap foot mut">Levi Cox Fitness · <a href="https://instagram.com/levi_cox">@levi_cox</a> · Training at your own risk. Check with your doctor before starting a new program.
+<ul class="sh-socials " aria-label="Levi Cox on social media"><li><a href="https://instagram.com/levi_cox" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".7" fill="currentColor"/></svg></a></li><li><a href="https://youtube.com/@levicoxfitness" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9l5 3-5 3z"/></svg></a></li><li><a href="https://wa.me/61404263024" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.6-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg></a></li><li><a href="mailto:levicoxfitness@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a></li><li><a href="https://stan.store/levicox" target="_blank" rel="noopener" aria-label="Stan Store" title="Stan Store"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l2 5H4z"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M9 12a3 3 0 0 0 6 0"/></svg></a></li></ul>
+</footer>
 <script>
 const STORE = "https://stan.store/levicox";
 const APP = "https://app.levicox.com";
@@ -533,5 +556,6 @@ function result({ main, alt, note, d }) {
 }
 render();
 </script>
+<script src="../site-chrome.js" defer></script>
 </body>
 </html>
