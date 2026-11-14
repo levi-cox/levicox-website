@@ -237,16 +237,17 @@ a.gc:focus-visible{outline-offset:-3px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 
 
-.ab-hero{background:var(--ink);color:var(--bone);overflow:hidden}
-.ab-hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:end;padding-top:64px}
-.ab-hero h1{font-size:clamp(40px,5.4vw,76px);margin:0 0 24px}
-.ab-hero h1 em{font-style:normal;color:var(--signal);display:block}
-.ab-hero p.lede{font-size:19px;line-height:1.55;color:var(--inkmut);max-width:46ch;margin-bottom:32px}
-.ab-hero .abcta{display:flex;gap:12px;flex-wrap:wrap;padding-bottom:64px}
+.ab-hero{position:relative;background:var(--ink);color:var(--bone);overflow:hidden;min-height:clamp(560px,86vh,820px);display:flex;align-items:flex-end}
+.ab-hero .bg{position:absolute;top:0;right:0;bottom:0;width:62%;height:100%;max-width:none;object-fit:cover;object-position:50% 12%;-webkit-mask-image:linear-gradient(to right,transparent 0,#000 38%);mask-image:linear-gradient(to right,transparent 0,#000 38%)}
+.ab-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,17,17,.45) 0,rgba(17,17,17,.15) 35%,rgba(17,17,17,.82) 100%)}
+.ab-hero .wrap{position:relative;z-index:1;width:100%;padding-top:96px;padding-bottom:64px}
+.ab-hero h1{font-size:clamp(36px,4.5vw,64px);line-height:1;margin:0 0 22px;white-space:nowrap}
+.ab-hero h1 .t{color:var(--signal)}
+.ab-hero h1 .cur{display:inline-block;width:.06em;height:.86em;margin-left:.06em;background:var(--signal);vertical-align:-.06em;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.ab-hero p.lede{font-size:19px;line-height:1.55;color:#d9d5cb;max-width:46ch;margin-bottom:28px;text-shadow:0 1px 14px rgba(0,0,0,.5)}
+.ab-hero .abcta{display:flex;gap:12px;flex-wrap:wrap}
 .ab-hero .abcta .btn{display:inline-flex}
-.portrait{position:relative;align-self:end}
-.portrait::before{content:"";position:absolute;left:24%;right:0;top:12%;bottom:0;background:var(--signal);border-radius:var(--r) var(--r) 0 0}
-.portrait img{position:relative;width:88%;max-width:none;margin-left:auto;margin-right:6%;aspect-ratio:2/3;object-fit:cover;object-position:top;display:block}
 .ab-facts{background:var(--stone);border-bottom:1px solid #d3cfc3}
 .ab-facts .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
 .ab-facts .wrap>div{padding:26px 24px 26px 0}
@@ -295,11 +296,11 @@ section.ab-end{padding:88px 0;background:var(--signal);color:var(--ink)}
 .ab-end .btn-ghost{border-color:var(--ink)}
 @media (max-width:860px){
  .wrap{padding:0 20px}
- .ab-hero .wrap{grid-template-columns:1fr;gap:8px;padding-top:40px}
- .ab-hero .abcta{padding-bottom:32px}
- .ab-hero h1{font-size:clamp(42px,12.5vw,60px)}
- .portrait{order:2;max-width:340px;margin:0 auto 0 auto;width:86%}
- .portrait::before{left:8%;right:-8%}
+ .ab-hero{min-height:clamp(560px,88svh,720px)}
+ .ab-hero .bg{width:100%;object-position:60% 8%;-webkit-mask-image:none;mask-image:none}
+ .ab-hero::after{background:linear-gradient(180deg,rgba(17,17,17,.35) 0,rgba(17,17,17,.3) 28%,rgba(17,17,17,.9) 62%,rgba(17,17,17,.96) 100%)}
+ .ab-hero .wrap{padding-top:72px;padding-bottom:36px}
+ .ab-hero h1{font-size:clamp(30px,9.4vw,52px);white-space:normal;min-height:2em}
  .ab-facts .wrap{grid-template-columns:1fr 1fr}
  .ab-facts .wrap>div{padding:20px 16px 20px 0;border-left:0!important}
  .ab-facts .wrap>div:nth-child(even){padding-left:18px;border-left:1px solid #c9c5b8!important}
@@ -315,7 +316,7 @@ section.ab-end{padding:88px 0;background:var(--signal);color:var(--ink)}
  section.ab-end{padding:56px 0}
  .ab-end .abcta .btn{flex:1}
 }
-@media (prefers-reduced-motion:reduce){.way{transition:none}}
+@media (prefers-reduced-motion:reduce){.way{transition:none}.ab-hero h1 .cur{animation:none}}
 
 </style>
 </head>
@@ -346,13 +347,11 @@ section.ab-end{padding:88px 0;background:var(--signal);color:var(--ink)}
 </header>
 <main>
 <section class="ab-hero">
+<img class="bg" src="../images/v2/web/levi.jpg" alt="Levi Cox standing with arms crossed in the gym" width="800" height="1200" fetchpriority="high">
 <div class="wrap">
-<div>
-<h1 class="d">I learned to train<em>in a gymnastics hall.</em></h1>
-<p class="lede">I'm Levi, a personal trainer in Miami. Thirteen years of gymnastics taught me that good technique is slow to build and worth every rep. I coach the same way.</p>
+<h1 class="d" aria-label="Levi Cox: personal trainer, ex-gymnast, vegan, health coach">I'm <span class="t" id="tick" aria-hidden="true">a personal trainer</span><span class="cur" aria-hidden="true"></span></h1>
+<p class="lede">I'm Levi, a Miami personal trainer. Thirteen years of gymnastics taught me that good technique is slow to build and worth every rep. I coach the same way.</p>
 <div class="abcta"><a class="btn btn-hero" href="../quiz/">Find your program<span class="arr" aria-hidden="true">→</span></a><a class="btn btn-ghost-ink" href="../#contact">Train with me</a></div>
-</div>
-<div class="portrait"><img src="../images/v2/web/levi.jpg" alt="Levi Cox standing with arms crossed in the gym" width="800" height="1200"></div>
 </div>
 </section>
 
@@ -424,5 +423,18 @@ section.ab-end{padding:88px 0;background:var(--signal);color:var(--ink)}
 </div>
 </footer>
 <script src="../site-chrome.js" defer></script>
+<script>
+(function(){
+  var el=document.getElementById('tick');if(!el)return;
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var words=['a personal trainer','an ex-gymnast','a vegan','a health coach'],w=0,i=words[0].length,del=true;
+  function tick(){
+    var cur=words[w];
+    if(del){i--;el.textContent=cur.slice(0,i);if(i<=0){del=false;w=(w+1)%words.length;setTimeout(tick,260);return}setTimeout(tick,34)}
+    else{var nx=words[w];i++;el.textContent=nx.slice(0,i);if(i>=nx.length){del=true;setTimeout(tick,1500);return}setTimeout(tick,62)}
+  }
+  setTimeout(tick,1700);
+})();
+</script>
 </body>
 </html>
