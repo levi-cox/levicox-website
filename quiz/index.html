@@ -454,14 +454,14 @@ const PROGRAMS = {
  "general-4": {
   "slug": "foundations",
   "title": "Foundations",
-  "tagline": "The free 4-day base program.",
+  "tagline": "The 4-day base program.",
   "level": "beginner",
   "weeks": null,
   "days": 4,
   "minutes": null,
   "tier": "free",
   "week": [],
-  "blurb": "A simple 4-day program that covers your whole body and builds the habit. It is the base program in the Levi Cox Fitness app, and it is free.",
+  "blurb": "A simple 4-day program that covers your whole body and builds the habit. It is the base program in the Levi Cox Fitness app.",
   "stan": null
  }
 };
@@ -526,9 +526,7 @@ function pick() {
 function card(p, isAlt) {
   const meta = [p.level === "beginner" ? "Beginner" : "Intermediate", p.weeks ? p.weeks + " weeks" : null, p.days + " days a week", p.minutes ? "About " + p.minutes + " min" : null].filter(Boolean);
   const pdf = p.stan === null ? "" : `<a class="btn btn-hero" href="${h(p.stan || STORE)}" target="_blank" rel="noopener">Get the PDF<span class="arr" aria-hidden="true">→</span></a>`;
-  const inApp = p.tier === "free"
-    ? `<a class="btn btn-ghost-ink" href="${APP}" target="_blank" rel="noopener">${p.stan === null ? "Start free in the app" : "Or follow it free in the app"}<span class="arr" aria-hidden="true">→</span></a>`
-    : `<a class="btn btn-ghost-ink" href="${APP}" target="_blank" rel="noopener">Also in the app with Pro<span class="arr" aria-hidden="true">→</span></a>`;
+  const inApp = `<a class="btn btn-ghost-ink" href="${APP}" target="_blank" rel="noopener">${p.stan === null ? "Start 7-day free trial in the app" : "Or follow it in the app, 7 days free"}<span class="arr" aria-hidden="true">→</span></a>`;
   return `<div class="card">
     <div class="lab">${isAlt ? "Step-up option" : "Your match"}</div>
     <h2 class="d">${h(p.title)}</h2>
@@ -537,6 +535,7 @@ function card(p, isAlt) {
     <p class="blurb" style="margin-top:0;color:var(--bone)">${h(p.blurb)}</p>
     ${p.week.length ? `<ul class="week" aria-label="Your training week">${p.week.map((t, i) => `<li><span>Day ${i + 1}</span>${h(t)}</li>`).join("")}</ul>` : ""}
     <div class="cta">${pdf}${inApp}</div>
+    <p class="mut" style="margin:14px 0 0;font-size:14px">${p.stan === null ? "" : "The PDF is a one-off purchase. "}App membership includes every program: 7 days free (card required), then $6.99 a week, $19.99 a month, $39.99 for 3 months or $79.99 a year. Logging your own workouts is always free.</p>
   </div>`;
 }
 
