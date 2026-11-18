@@ -535,7 +535,7 @@ function card(p, isAlt) {
     <p class="blurb" style="margin-top:0;color:var(--bone)">${h(p.blurb)}</p>
     ${p.week.length ? `<ul class="week" aria-label="Your training week">${p.week.map((t, i) => `<li><span>Day ${i + 1}</span>${h(t)}</li>`).join("")}</ul>` : ""}
     <div class="cta">${pdf}${inApp}</div>
-    <p class="mut" style="margin:14px 0 0;font-size:14px">${p.stan === null ? "" : "The PDF is a one-off purchase. "}App membership includes every program: 7 days free (card required), then $6.99 a week, $19.99 a month, $39.99 for 3 months or $79.99 a year. Logging your own workouts is always free.</p>
+    <p class="mut" style="margin:14px 0 0;font-size:14px">${p.stan === null ? "" : "The PDF is a one-off purchase. "}App membership includes every program: 7 days free (card required), then $69 a year, $33.99 for 3 months or $16.99 a month. Logging your own workouts is always free.</p>
   </div>`;
 }
 
