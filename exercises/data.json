@@ -1,9 +1,7 @@
 [
-  {
-    "name": "Hip Adduction Machine",
-    "muscle": "",
-    "equipment": "Machine",
-    "cue": "Control the opening, squeeze in fully, pause for a second.",
-    "video": "https://youtu.be/ZZucNCcHPwU"
-  }
+  {"name": "Barbell hip thrust", "muscle": "glutes", "equipment": "barbell", "cue": "Chin tucked, ribs down, squeeze the glutes at the top. Pause 1 sec", "video": "https://youtu.be/PLAU893lNac"},
+  {"name": "Hip abduction machine", "muscle": "glutes", "equipment": "machine", "cue": "Lean slightly forward to hit the glutes", "video": "https://youtu.be/ZZucNCcHPwU"},
+  {"name": "Hip Adduction Machine", "muscle": "", "equipment": "Machine", "cue": "Control the opening, squeeze in fully, pause for a second.", "video": "https://youtu.be/YZAo8YoBfQE"},
+  {"name": "Hip thrust", "muscle": "glutes", "equipment": "barbell", "cue": "Upper back on the bench, chin tucked, drive the hips up until the shins are vertical and squeeze for a full second.", "video": "https://youtu.be/PLAU893lNac"},
+  {"name": "Seated Leg Press Machine", "muscle": "quads", "equipment": "machine", "cue": "", "video": "https://youtu.be/_EihgIOQV64"}
 ]
