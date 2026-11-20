@@ -21,7 +21,39 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"AboutPage","url":"https://levicox.com/about/","mainEntity":{"@type":"Person","name":"Levi Cox","jobTitle":"Personal trainer and online coach","url":"https://levicox.com/about/","image":"https://levicox.com/images/v2/web/levi.jpg","worksFor":{"@type":"Organization","name":"Levi Cox Fitness","url":"https://levicox.com/"},"address":{"@type":"PostalAddress","addressLocality":"Miami","addressRegion":"FL","addressCountry":"US"},"alumniOf":"BSc Anatomy and Neuroscience","sameAs":["https://instagram.com/levi_cox","https://youtube.com/@levicoxfitness","https://stan.store/levicox"]}}</script>
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "AboutPage",
+ "url": "https://levicox.com/about/",
+ "mainEntity": {
+  "@type": "Person",
+  "name": "Levi Cox",
+  "jobTitle": "Personal trainer and online coach",
+  "url": "https://levicox.com/about/",
+  "image": "https://levicox.com/images/v2/web/levi.jpg",
+  "worksFor": {
+   "@id": "https://levicox.com/#organization"
+  },
+  "address": {
+   "@type": "PostalAddress",
+   "addressLocality": "Miami",
+   "addressRegion": "FL",
+   "addressCountry": "US"
+  },
+  "sameAs": [
+   "https://instagram.com/levi_cox",
+   "https://instagram.com/levicoxfitness",
+   "https://youtube.com/@levicoxfitness",
+   "https://stan.store/levicox"
+  ],
+  "@id": "https://levicox.com/#person",
+  "hasCredential": {
+   "@type": "EducationalOccupationalCredential",
+   "credentialCategory": "degree",
+   "name": "BSc Anatomy & Neuroscience"
+  }
+ }
+}</script>
 <style>
 :root{--ink:#111111;--bone:#F2F0EB;--signal:#FF5B1F;--stone:#E6E3DA;--rule:#3A3A3A;--mut:#3B3832;--inkmut:#B9B5AB;--deep:#8A3410;--signal-ink:#D9430C;
 --ease-out:cubic-bezier(.22,1,.36,1);--ease-io:cubic-bezier(.65,0,.35,1);--spring:cubic-bezier(.34,1.56,.64,1);--t-micro:180ms;--r:8px;
@@ -327,7 +359,7 @@ section.ab-end{padding:88px 0;background:var(--signal);color:var(--ink)}
 <div class="sh-bar">
 <a class="sh-logo" href="../" aria-label="Levi Cox Fitness, home"><img src="../images/v2/lockup.svg" alt="Levi Cox Fitness" width="484" height="165"></a>
 <nav class="sh-nav" aria-label="Main">
-<a href="../#training">Training</a>
+<a href="../personal-training-miami/">Training</a>
 <a href="../coaching/">Coaching</a>
 <a href="../programs/">Programs</a>
 <a href="../app/">App</a>
@@ -338,11 +370,12 @@ section.ab-end{padding:88px 0;background:var(--signal);color:var(--ink)}
 </div>
 <div class="sh-panel" id="site-menu" hidden>
 <div class="sh-panel-in">
-<a class="sh-link" href="../#training">Training</a>
+<a class="sh-link" href="../personal-training-miami/">Personal training in Miami</a>
 <a class="sh-link" href="../coaching/">Online coaching</a>
 <a class="sh-link" href="../programs/">Programs</a>
 <a class="sh-link" href="../quiz/">Find your program</a>
 <a class="sh-link" href="../app/">App</a>
+<a class="sh-link" href="../articles/">Articles</a>
 <a class="sh-link" href="../about/" aria-current="page">About</a>
 <a class="sh-link" href="../book/">Book a session</a>
 <ul class="sh-socials " aria-label="Levi Cox on social media"><li><a href="https://instagram.com/levi_cox" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".7" fill="currentColor"/></svg></a></li><li><a href="https://youtube.com/@levicoxfitness" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9l5 3-5 3z"/></svg></a></li><li><a href="https://wa.me/61404263024" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.6-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg></a></li><li><a href="mailto:levicoxfitness@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a></li><li><a href="https://stan.store/levicox" target="_blank" rel="noopener" aria-label="Stan Store" title="Stan Store"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l2 5H4z"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M9 12a3 3 0 0 0 6 0"/></svg></a></li></ul>
@@ -404,7 +437,7 @@ section.ab-end{padding:88px 0;background:var(--signal);color:var(--ink)}
 <div class="wrap">
 <h2 class="d">Three ways to train with me</h2>
 <div class="ways">
-<a class="way" href="../book/"><div><h3>In person</h3><p>One-to-one sessions in Miami at Elev8tion Midtown, or I come to your gym or home. Tell me your goal and I'll reply with next steps.</p></div><span class="go">Book a session</span></a>
+<a class="way" href="../personal-training-miami/"><div><h3>In person</h3><p>One-to-one sessions in Miami at Elev8tion Midtown, or I come to your gym or home. Tell me your goal and I'll reply with next steps.</p></div><span class="go">Personal training in Miami</span></a>
 <a class="way" href="../programs/"><div><h3>Programs</h3><p>19 programs for building muscle, getting stronger, losing fat or training hybrid. Two to five days a week.</p></div><span class="go">See the programs</span></a>
 <a class="way" href="../app/"><div><h3>The app</h3><p>Follow the plan, log every set and watch your numbers climb. Try every program free for 7 days.</p></div><span class="go">Open the app</span></a>
 </div>
@@ -423,7 +456,7 @@ section.ab-end{padding:88px 0;background:var(--signal);color:var(--ink)}
 <div class="wrap">
 <span class="brand"><img src="../images/v2/mark-white.svg" alt="" width="256" height="256"><span class="lab">Levi Cox Fitness</span></span>
 <ul class="sh-socials " aria-label="Levi Cox on social media"><li><a href="https://instagram.com/levi_cox" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".7" fill="currentColor"/></svg></a></li><li><a href="https://youtube.com/@levicoxfitness" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9l5 3-5 3z"/></svg></a></li><li><a href="https://wa.me/61404263024" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.6-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg></a></li><li><a href="mailto:levicoxfitness@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a></li><li><a href="https://stan.store/levicox" target="_blank" rel="noopener" aria-label="Stan Store" title="Stan Store"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l2 5H4z"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M9 12a3 3 0 0 0 6 0"/></svg></a></li></ul>
-<span class="inkmut meta"><span>Miami, FL · © 2026</span> <a class="lnk lnk-block" href="../programs/">Programs</a> <a class="lnk lnk-block" href="https://youtube.com/@levicoxfitness">YouTube</a></span>
+<span class="inkmut meta"><span>Miami, FL · © 2026</span> <a class="lnk lnk-block" href="../programs/">Programs</a> <a class="lnk lnk-block" href="https://youtube.com/@levicoxfitness">YouTube</a> <a class="lnk lnk-block" href="../articles/">Articles</a></span>
 </div>
 </footer>
 <script src="../site-chrome.js" defer></script>
