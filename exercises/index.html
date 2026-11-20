@@ -57,6 +57,16 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 .body h2{font-family:'Archivo',system-ui,sans-serif;font-weight:800;text-transform:uppercase;font-size:19px;line-height:1.05;margin:0 0 6px}
 .tags{margin:0 0 8px}
 .body p{margin:0;font-size:14px;color:var(--mut)}
+button.card{font:inherit;color:inherit;text-align:left;cursor:pointer;padding:0;width:100%}
+dialog.vid{border:0;padding:0;background:transparent;max-width:min(960px,94vw);width:100%;overflow:visible}
+dialog.vid::backdrop{background:rgba(17,17,17,.88)}
+.vbox{position:relative;background:var(--ink);border-radius:var(--r);overflow:hidden}
+.vframe{position:relative;aspect-ratio:16/9;background:#000}
+.vframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vcap{padding:14px 18px 18px;color:var(--bone)}
+.vcap h2{font-family:'Archivo',system-ui,sans-serif;font-weight:800;text-transform:uppercase;font-size:20px;margin:0 0 4px}
+.vcap p{margin:0;color:var(--inkmut);font-size:14px}
+.vclose{position:absolute;top:8px;right:8px;z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:var(--signal);color:var(--ink);font:800 22px/1 'Archivo',sans-serif;cursor:pointer}
 .empty{padding:40px 0 96px;max-width:620px}
 .empty .btn{display:inline-flex;align-items:center;justify-content:center;height:56px;padding:0 28px;margin:8px 12px 0 0;border-radius:var(--r);font-family:'Archivo',system-ui,sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:15px;text-decoration:none}
 .btn-hero{background:var(--signal);color:var(--ink)}.btn-ghost{border:1.5px solid var(--ink)}
@@ -120,6 +130,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 </section>
 </main>
 
+<dialog class="vid" id="vid" aria-label="Exercise video">
+<div class="vbox">
+<button class="vclose" type="button" id="vclose" aria-label="Close video">&times;</button>
+<div class="vframe" id="vframe"></div>
+<div class="vcap"><h2 id="vtitle"></h2><p id="vsub"></p></div>
+</div>
+</dialog>
+
 <footer class="ink foot">
 <div class="wrap">
 <span class="brand"><img src="../images/v2/mark-white.svg" alt="" width="256" height="256"><span class="lab">Levi Cox Fitness</span></span>
@@ -135,6 +153,21 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
   function ytId(u){var m=String(u).match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/|live\/))([\w-]{6,})/i);return m?m[1]:null}
   function pretty(s){return String(s||'').replace(/_/g,' ')}
   function safe(u){return /^https:\/\/(www\.|m\.)?(youtube\.com|youtu\.be)\//i.test(u)?u:null}
+  var dlg=document.getElementById('vid'),vf=document.getElementById('vframe'),lastBtn=null;
+  function closeVid(){vf.textContent='';if(dlg.open)dlg.close();if(lastBtn)lastBtn.focus()}
+  function openVid(id,e){
+    lastBtn=document.activeElement;
+    var f=document.createElement('iframe');
+    f.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+'?autoplay=1&rel=0&playsinline=1&modestbranding=1';
+    f.title=e.name+' form video';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;f.referrerPolicy='strict-origin-when-cross-origin';
+    vf.textContent='';vf.appendChild(f);
+    document.getElementById('vtitle').textContent=e.name;
+    document.getElementById('vsub').textContent=[pretty(e.muscle),e.equipment].filter(Boolean).join(' · ');
+    if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','');
+  }
+  document.getElementById('vclose').addEventListener('click',closeVid);
+  dlg.addEventListener('click',function(ev){if(ev.target===dlg)closeVid()});
+  dlg.addEventListener('close',function(){vf.textContent=''});
   function render(){
     var t=q.value.trim().toLowerCase();
     var rows=data.filter(function(e){
@@ -142,8 +175,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
     });
     grid.textContent='';
     rows.forEach(function(e){
-      var id=ytId(e.video),href=safe(e.video);if(!id||!href)return;
-      var a=document.createElement('a');a.className='card';a.href=href;a.target='_blank';a.rel='noopener';
+      var id=ytId(e.video);if(!id)return;
+      var a=document.createElement('button');a.type='button';a.className='card';a.setAttribute('aria-label','Play '+e.name);a.addEventListener('click',function(){openVid(id,e)});
       var th=document.createElement('div');th.className='thumb';
       var im=document.createElement('img');im.loading='lazy';im.alt='';im.src='https://i.ytimg.com/vi/'+id+'/hqdefault.jpg';th.appendChild(im);
       var pl=document.createElement('span');pl.className='play';pl.appendChild(document.createElement('i'));th.appendChild(pl);
