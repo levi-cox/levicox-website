@@ -1,7 +1,121 @@
 [
-  {"name": "Barbell hip thrust", "muscle": "glutes", "equipment": "barbell", "cue": "Chin tucked, ribs down, squeeze the glutes at the top. Pause 1 sec", "video": "https://youtu.be/PLAU893lNac"},
-  {"name": "Hip abduction machine", "muscle": "glutes", "equipment": "machine", "cue": "Lean slightly forward to hit the glutes", "video": "https://youtu.be/ZZucNCcHPwU"},
-  {"name": "Hip Adduction Machine", "muscle": "", "equipment": "Machine", "cue": "Control the opening, squeeze in fully, pause for a second.", "video": "https://youtu.be/YZAo8YoBfQE"},
-  {"name": "Hip thrust", "muscle": "glutes", "equipment": "barbell", "cue": "Upper back on the bench, chin tucked, drive the hips up until the shins are vertical and squeeze for a full second.", "video": "https://youtu.be/PLAU893lNac"},
-  {"name": "Seated Leg Press Machine", "muscle": "quads", "equipment": "machine", "cue": "", "video": "https://youtu.be/_EihgIOQV64"}
+ {
+  "name": "B-stance Smith machine RDL",
+  "muscle": "glutes",
+  "equipment": "Smith machine",
+  "cue": "",
+  "video": "https://youtu.be/YQf985hMODI"
+ },
+ {
+  "name": "Barbell hip thrust",
+  "muscle": "glutes",
+  "equipment": "barbell",
+  "cue": "Chin tucked, ribs down, squeeze the glutes at the top. Pause 1 sec",
+  "video": "https://youtu.be/PLAU893lNac"
+ },
+ {
+  "name": "Hip abduction machine",
+  "muscle": "glutes",
+  "equipment": "machine",
+  "cue": "Lean slightly forward to hit the glutes",
+  "video": "https://youtu.be/ZZucNCcHPwU"
+ },
+ {
+  "name": "Hip Adduction Machine",
+  "muscle": "",
+  "equipment": "Machine",
+  "cue": "Control the opening, squeeze in fully, pause for a second.",
+  "video": "https://youtu.be/YZAo8YoBfQE"
+ },
+ {
+  "name": "Hip thrust",
+  "muscle": "glutes",
+  "equipment": "barbell",
+  "cue": "Upper back on the bench, chin tucked, drive the hips up until the shins are vertical and squeeze for a full second.",
+  "video": "https://youtu.be/PLAU893lNac"
+ },
+ {
+  "name": "Incline Smith machine press",
+  "muscle": "chest",
+  "equipment": "",
+  "cue": "",
+  "video": "https://youtu.be/jm2JRj3RYMM"
+ },
+ {
+  "name": "Seated Leg Press Machine",
+  "muscle": "quads",
+  "equipment": "machine",
+  "cue": "",
+  "video": "https://youtu.be/_EihgIOQV64"
+ },
+ {
+  "name": "Smith machine banded hip thrust",
+  "muscle": "glutes",
+  "equipment": "Smith machine",
+  "cue": "",
+  "video": "https://youtu.be/ztG0Yav_BD4"
+ },
+ {
+  "name": "Smith machine bench press",
+  "muscle": "chest",
+  "equipment": "",
+  "cue": "",
+  "video": "https://youtu.be/RtJebaVXYWI"
+ },
+ {
+  "name": "Smith machine incline press",
+  "muscle": "chest",
+  "equipment": "",
+  "cue": "",
+  "video": "https://youtu.be/jm2JRj3RYMM"
+ },
+ {
+  "name": "Smith machine RDL",
+  "muscle": "glutes",
+  "equipment": "Smith machine",
+  "cue": "",
+  "video": "https://youtu.be/QaG6LEPH2k0"
+ },
+ {
+  "name": "Smith machine reverse lunge",
+  "muscle": "glutes",
+  "equipment": "Smith machine",
+  "cue": "",
+  "video": "https://youtu.be/XHoRmAJ87_g"
+ },
+ {
+  "name": "Smith machine split squat",
+  "muscle": "glutes",
+  "equipment": "Smith machine",
+  "cue": "",
+  "video": "https://youtu.be/KKE1pn-QUXY"
+ },
+ {
+  "name": "Smith machine squat",
+  "muscle": "glutes",
+  "equipment": "Smith machine",
+  "cue": "",
+  "video": "https://youtu.be/OmzOe3HyL0U"
+ },
+ {
+  "name": "Smith machine squat, feet slightly forward",
+  "muscle": "glutes",
+  "equipment": "Smith machine",
+  "cue": "",
+  "video": "https://youtu.be/nmxOB5pm_3E"
+ },
+ {
+  "name": "Smith machine sumo deadlift",
+  "muscle": "glutes",
+  "equipment": "Smith machine",
+  "cue": "",
+  "video": "https://youtu.be/MdvSs6CbnRE"
+ },
+ {
+  "name": "Squat (Smith machine or barbell)",
+  "muscle": "quads",
+  "equipment": "barbell",
+  "cue": "Feet slightly forward on the Smith, break at the knees and hips together",
+  "video": "https://youtu.be/OmzOe3HyL0U"
+ }
 ]
