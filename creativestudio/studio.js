@@ -79,7 +79,7 @@
     return data.result;
   }
   async function persist() {
-    const r = await api('/state', 'PUT', { rev: S.rev, state: { log: S.log, backlog: S.backlog, calendar: S.calendar, pieces: S.pieces } });
+    const r = await api('/state', 'PUT', { rev: S.rev, state: { log: S.log, backlog: S.backlog, calendar: S.calendar, pieces: S.pieces, trends: S.trends || null } });
     S.rev = r.rev;
   }
   // Apply a change, save it, and if another device saved first, re-apply on the newest copy once.
@@ -450,9 +450,86 @@
     if (ok) { ['#l-title', '#l-angle'].forEach((s) => ($(s).value = '')); renderLog(); toast('Added'); }
   });
 
+
+  /* ---------- home ---------- */
+  const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  function nextPostingDay() {
+    const d = new Date(); d.setHours(12, 0, 0, 0);
+    for (let i = 0; i < 8; i++) { if ([1, 3, 5].includes(d.getDay())) return d; d.setDate(d.getDate() + 1); }
+    return d;
+  }
+  const daysBetween = (isoDate) => Math.round((new Date(today() + 'T12:00:00') - new Date(isoDate + 'T12:00:00')) / 86400000);
+  function renderHome() {
+    // Next up
+    const t = today();
+    const upcoming = [].concat(...(S.calendar || []).map((p) => p.slots || [])).filter((s) => s.date >= t).sort((a, b) => a.date.localeCompare(b.date));
+    const slot = upcoming[0];
+    const nd = nextPostingDay();
+    let h;
+    if (slot) {
+      const n = Math.round((new Date(slot.date + 'T12:00:00') - new Date(t + 'T12:00:00')) / 86400000);
+      h = `<div class="card hero"><p class="q">Next up</p><p class="when">${esc(slot.day)}, ${esc(fmtDay(slot.date).replace(/^\w+,\s*/, ''))}</p>
+        <p class="ttl">${esc(slot.title)}</p><p class="mini" style="margin-top:4px">${esc(slot.format)} · ${esc(slot.hook_direction)}</p>
+        <p class="cmp">${n === 0 ? 'Posts today' : n === 1 ? 'Posts tomorrow' : `Posts in ${n} days`} · CTA: ${esc(slot.cta)} · You supply: ${esc(slot.needs)}</p>
+        <div class="btns"><button class="btn primary small" type="button" data-act="make-next">Make this</button><button class="btn small" type="button" data-act="goto-week">See the week</button></div></div>`;
+    } else {
+      h = `<div class="card hero"><p class="q">Next up</p><p class="when">${DAYS[nd.getDay()]}, ${esc(nd.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }))}</p>
+        <p class="ttl">Nothing planned yet</p><p class="cmp">Your next posting day. Plan the week to put three posts on the calendar.</p>
+        <div class="btns"><button class="btn primary small" type="button" data-act="goto-week">Plan the week</button><button class="btn small" type="button" data-act="goto-ideas">Get ideas</button></div></div>`;
+    }
+    $('#home-next').innerHTML = h;
+    window.__nextSlot = slot || null;
+
+    // Last posted
+    const posted = (S.log || []).filter((e) => e.status === 'posted').sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+    const lp = posted[0];
+    $('#home-posted').innerHTML = lp
+      ? `<div class="card"><p class="lbl">Last posted</p><p><strong>${esc(lp.title)}</strong></p>
+         <p class="mini" style="margin-top:6px">${daysBetween(lp.date) <= 0 ? 'Today' : daysBetween(lp.date) + ' days ago'} · ${esc(lp.format)}${lp.reach != null ? ` · reach ${esc(lp.reach)}, saves ${esc(lp.saves || 0)}, shares ${esc(lp.shares || 0)}` : ' · no numbers yet'}</p></div>`
+      : '<div class="card"><p class="lbl">Last posted</p><p class="mini">— Nothing marked as posted yet.</p></div>';
+
+    // Trends
+    const tr = S.trends;
+    const when = $('#trend-when');
+    if (tr && tr.ideas && tr.ideas.length) {
+      const hrs = Math.round((Date.now() - tr.at) / 3600000);
+      when.textContent = hrs < 1 ? 'Updated just now' : hrs < 48 ? `Updated ${hrs}h ago` : `Updated ${Math.round(hrs / 24)} days ago`;
+      when.classList.toggle('stale', hrs > 72);
+      $('#home-trends').innerHTML = tr.ideas.slice(0, 3).map((it, i) => `<div class="card trend"><span class="chip">${esc(it.format)}</span>
+        <p style="margin-top:10px"><strong>${esc(it.title)}</strong></p>
+        <p class="mini" style="margin-top:6px">${esc(it.angle)}</p>
+        <p class="why">Why now: ${esc(it.why_now)}</p>
+        <p class="src">${esc(it.evidence)}${it.source_url ? ` · <a href="${esc(it.source_url)}" target="_blank" rel="noopener noreferrer">source</a>` : ''}</p>
+        <div class="btns"><button class="btn primary small" type="button" data-act="make" data-i="${i}">Make this</button><button class="btn small" type="button" data-act="backlog" data-i="${i}">Save to backlog</button></div></div>`).join('');
+    } else {
+      when.textContent = '';
+      $('#home-trends').innerHTML = '<div class="card"><p class="mini">— No trends pulled yet. Tap the button below.</p></div>';
+    }
+  }
+  $('#view-home').addEventListener('click', async (e) => {
+    const b = e.target.closest('[data-act]'); if (!b) return;
+    const a = b.dataset.act;
+    if (a === 'goto-week') show('week');
+    if (a === 'goto-ideas') show('ideas');
+    if (a === 'make-next' && window.__nextSlot) startPiece(`${window.__nextSlot.title}. ${window.__nextSlot.hook_direction}`, window.__nextSlot.format);
+    const it = S.trends && S.trends.ideas && S.trends.ideas[+b.dataset.i];
+    if (a === 'make' && it) startPiece(`${it.title}. ${it.angle}`, it.format);
+    if (a === 'backlog' && it) {
+      const ok = await busy('Saving…', async () => { await mutate((s) => { if (!s.backlog.some((x) => x.title === it.title)) s.backlog.push({ id: uid(), title: it.title, format: it.format, angle: it.angle, cta: it.cta, needs: it.needs }); }); return true; });
+      if (ok) { renderBacklog(); toast('Added to backlog'); }
+    }
+  });
+  $('#go-trends').addEventListener('click', async () => {
+    const res = await busy('Searching the web for what is trending… up to two minutes', () => gen('trends', { today: today() }));
+    if (res && Array.isArray(res.ideas)) {
+      const ok = await busy('Saving…', async () => { await mutate((s) => { s.trends = { at: Date.now(), ideas: res.ideas, dropped: res.dropped || [], searched: res.searched || [] }; }); return true; });
+      if (ok) renderHome();
+    }
+  });
+
   /* ---------- boot ---------- */
   function renderAll() {
-    renderPiece(); renderBacklog(); renderWeek(); renderLog(); renderIdeas();
+    renderPiece(); renderBacklog(); renderWeek(); renderLog(); renderIdeas(); renderHome();
     $('#l-date').value = today();
     syncSegs();
   }
