@@ -295,6 +295,13 @@
       "skillPath": "skills/public-relations/SKILL.md",
       "computedHash": "67f6f9d2f7d1fa49601a5c196a31a397b2bf72a48e31e76c02e060292f3632c4"
     },
+    "reels-editor": {
+      "source": "andrebrito16/skill-reels-editor",
+      "commit": "de35ba532f9d79a1b70344d127633b66f03e4302",
+      "sourceType": "github",
+      "skillPath": "skills/reels-editor/SKILL.md",
+      "computedHash": "f67f9b2899c0e689212637f57297d6368ab8effc954f239447daf9a221236e7b"
+    },
     "referrals": {
       "source": "coreyhaines31/marketingskills",
       "commit": "c836332bf9848c65f6fa167003212b6fb7bdee73",
