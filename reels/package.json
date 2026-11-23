@@ -1,0 +1,33 @@
+{
+  "name": "levicox-reels",
+  "private": true,
+  "type": "module",
+  "description": "Remotion project for editing Instagram Reels (used with the reels-editor skill)",
+  "scripts": {
+    "dev": "remotion studio",
+    "render": "remotion render",
+    "preview": "remotion render --scale=0.5",
+    "typecheck": "tsc --noEmit",
+    "reel:transcribe": "node ../.agents/skills/reels-editor/scripts/transcribe.mjs",
+    "reel:cuts": "node ../.agents/skills/reels-editor/scripts/silence-cuts.mjs",
+    "reel:lut": "node ../.agents/skills/reels-editor/scripts/make-lut.mjs",
+    "reel:master": "node ../.agents/skills/reels-editor/scripts/build-master.mjs",
+    "reel:align": "node ../.agents/skills/reels-editor/scripts/align-captions.mjs",
+    "reel:captions": "node ../.agents/skills/reels-editor/scripts/group-captions.mjs",
+    "reel:patch": "node ../.agents/skills/reels-editor/scripts/patch.mjs",
+    "reel:roto": "bash ../.agents/skills/reels-editor/scripts/roto.sh",
+    "reel:encode": "bash ../.agents/skills/reels-editor/scripts/encode-instagram.sh"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.545",
+    "@remotion/google-fonts": "4.0.545",
+    "@remotion/media": "4.0.545",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.545"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.2",
+    "typescript": "5.9.3"
+  }
+}
