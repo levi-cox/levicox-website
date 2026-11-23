@@ -120,10 +120,15 @@
   /* ---------- tabs ---------- */
   function show(view) {
     $$('.view').forEach((v) => (v.hidden = v.id !== 'view-' + view));
-    $$('.tabs button').forEach((b) => b.classList.toggle('on', b.dataset.view === view));
+    const btns = $$('.tabs button');
+    btns.forEach((b) => b.classList.toggle('on', b.dataset.view === view));
+    const nav = $('.tabs'), bub = $('.bubble');
+    nav.style.setProperty('--i', btns.findIndex((b) => b.dataset.view === view));
+    if (nav.classList.contains('live')) { bub.classList.remove('go'); void bub.offsetWidth; bub.classList.add('go'); }
     window.scrollTo(0, 0);
   }
   $$('.tabs button').forEach((b) => b.addEventListener('click', () => show(b.dataset.view)));
+  requestAnimationFrame(() => requestAnimationFrame(() => $('.tabs').classList.add('live')));
 
   /* ---------- segmented controls ---------- */
   function seg(id, key) {
