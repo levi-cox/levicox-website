@@ -253,6 +253,13 @@
   }
 
   /* ---------- create actions ---------- */
+  function reveal(last) {
+    requestAnimationFrame(() => {
+      const hs = document.querySelectorAll('#create-out .step-h');
+      const el = last && hs.length ? hs[hs.length - 1] : $('#create-out');
+      if (el) { const y = el.getBoundingClientRect().top + window.scrollY - 76; window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' }); }
+    });
+  }
   async function doHooks() {
     const topic = $('#topic').value.trim();
     if (!topic) { toast('Add a topic first.', true); $('#topic').focus(); return; }
@@ -264,7 +271,7 @@
     piece.top = Number.isInteger(res.top_pick) ? res.top_pick : 0;
     piece.why = res.why || '';
     piece.chosen = piece.top < piece.hooks.length ? piece.top : null;
-    saveDraft(); renderPiece();
+    saveDraft(); renderPiece(); reveal(false);
   }
   async function doBuild() {
     const hook = piece.hooks[piece.chosen];
@@ -272,18 +279,18 @@
     const res = await busy(piece.format === 'carousel' ? 'Building the carousel…' : 'Writing the script…', () => gen(task, { topic: piece.topic, hook, type: piece.type }));
     if (!res) return;
     piece.build = res; piece.caption = null; piece.review = null; piece.saved = false;
-    saveDraft(); renderPiece();
+    saveDraft(); renderPiece(); reveal(true);
   }
   async function doCaption() {
     const res = await busy('Writing captions…', () => gen('caption', { topic: piece.topic, format: piece.format, type: piece.type, piece: pieceSummary(), cta: (piece.build && piece.build.cta) || '' }));
     if (!res) return;
     piece.caption = res; piece.review = null;
-    saveDraft(); renderPiece();
+    saveDraft(); renderPiece(); reveal(true);
   }
   async function doReview() {
     const res = await busy('Running the final check…', () => gen('review', { topic: piece.topic, format: piece.format, type: piece.type, piece: pieceSummary(), unverified: (piece.build && piece.build.unverified) || [], caption: piece.caption && piece.caption.short, plannedDay: 'not set' }));
     if (!res) return;
-    piece.review = res; saveDraft(); renderPiece();
+    piece.review = res; saveDraft(); renderPiece(); reveal(true);
   }
   async function doSave() {
     const status = $('#sv-status').value, date = $('#sv-date').value || today();
