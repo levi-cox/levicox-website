@@ -42,8 +42,18 @@
   </header>
 
   <main>
+    <!-- HOME -->
+    <section id="view-home" class="view">
+      <div id="home-next"></div>
+      <div id="home-posted"></div>
+      <div class="home-h"><h2>Top trending ideas</h2><span id="trend-when" class="mini"></span></div>
+      <div id="home-trends"></div>
+      <button id="go-trends" class="btn block" type="button">Find what's trending now</button>
+      <p class="hint">Searches the web for current fitness and training content, then checks it against everything you've made. Takes up to two minutes.</p>
+    </section>
+
     <!-- CREATE -->
-    <section id="view-create" class="view">
+    <section id="view-create" class="view" hidden>
       <div class="card">
         <label class="lbl" for="topic">What's the piece about?</label>
         <textarea id="topic" rows="3" placeholder="e.g. how many sets per week for wider shoulders"></textarea>
@@ -121,7 +131,8 @@
 
   <nav class="tabs" aria-label="Studio sections">
     <span class="bubble" aria-hidden="true"></span>
-    <button data-view="create" class="on"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Create</button>
+    <button data-view="home" class="on"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>Home</button>
+    <button data-view="create"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Create</button>
     <button data-view="ideas"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.3 1 2.5h6c0-1.2.3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg>Ideas</button>
     <button data-view="week"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Week</button>
     <button data-view="log"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h9"/></svg>Log</button>
