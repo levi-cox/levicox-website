@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Creative Studio | Levi Cox Fitness</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#111111">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Studio">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="../favicon.ico" sizes="48x48">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Barlow+Condensed:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="studio.css">
+</head>
+<body>
+
+<!-- Lock screen: nothing private is in this page. All brand data lives behind the passcode. -->
+<section id="lock" class="lock">
+  <img class="lock-logo" src="../images/logo-white.svg" alt="Levi Cox Fitness">
+  <h1>Creative Studio</h1>
+  <p class="muted">Private. Enter your passcode.</p>
+  <form id="lock-form" autocomplete="off">
+    <input id="pass" type="password" inputmode="text" placeholder="Passcode" autocomplete="current-password" aria-label="Passcode" required>
+    <button class="btn primary" type="submit" id="unlock-btn">Unlock</button>
+    <p id="lock-err" class="err" role="alert" hidden></p>
+  </form>
+</section>
+
+<div id="app" hidden>
+  <header class="top">
+    <a class="back" href="/">levicox.com</a>
+    <h1>Creative Studio</h1>
+    <button id="signout" class="ghost" type="button">Lock</button>
+  </header>
+
+  <main>
+    <!-- CREATE -->
+    <section id="view-create" class="view">
+      <div class="card">
+        <label class="lbl" for="topic">What's the piece about?</label>
+        <textarea id="topic" rows="3" placeholder="e.g. how many sets per week for wider shoulders"></textarea>
+        <div class="row">
+          <div>
+            <span class="lbl">Format</span>
+            <div class="seg" id="seg-format" role="group" aria-label="Format">
+              <button type="button" data-v="reel" class="on">Reel</button>
+              <button type="button" data-v="carousel">Carousel</button>
+            </div>
+          </div>
+          <div>
+            <span class="lbl">Type</span>
+            <div class="seg" id="seg-type" role="group" aria-label="Type">
+              <button type="button" data-v="training" class="on">Training</button>
+              <button type="button" data-v="nutrition">Nutrition</button>
+              <button type="button" data-v="science">Science</button>
+            </div>
+          </div>
+        </div>
+        <button id="go-hooks" class="btn primary block" type="button">Check log and get hooks</button>
+        <p class="hint">Checks everything you've already made first, so nothing repeats.</p>
+      </div>
+
+      <div id="create-out"></div>
+    </section>
+
+    <!-- IDEAS -->
+    <section id="view-ideas" class="view" hidden>
+      <div class="card">
+        <label class="lbl" for="idea-topic">Focus (optional)</label>
+        <input id="idea-topic" type="text" placeholder="e.g. back width, protein, Hyrox">
+        <button id="go-ideas" class="btn primary block" type="button">Get ideas</button>
+      </div>
+      <div id="ideas-out"></div>
+      <h2 class="sec">Backlog</h2>
+      <div id="backlog"></div>
+    </section>
+
+    <!-- WEEK -->
+    <section id="view-week" class="view" hidden>
+      <div class="card">
+        <p class="lbl">Next week</p>
+        <p id="week-range" class="big"></p>
+        <p class="hint">Posts go out Monday, Wednesday and Friday.</p>
+        <button id="go-week" class="btn primary block" type="button">Plan the week</button>
+      </div>
+      <div id="week-out"></div>
+      <h2 class="sec">Saved plans</h2>
+      <div id="calendar"></div>
+    </section>
+
+    <!-- LOG -->
+    <section id="view-log" class="view" hidden>
+      <input id="log-search" type="search" placeholder="Search everything you've made" aria-label="Search the log">
+      <div id="log-list"></div>
+      <details class="card add">
+        <summary>Add an entry</summary>
+        <label class="lbl" for="l-title">Title</label>
+        <input id="l-title" type="text">
+        <label class="lbl" for="l-angle">Angle (one line)</label>
+        <input id="l-angle" type="text">
+        <div class="row">
+          <div><label class="lbl" for="l-format">Format</label>
+            <select id="l-format"><option>Reel</option><option>Carousel</option><option>Post</option><option>Story</option><option>Other</option></select></div>
+          <div><label class="lbl" for="l-status">Status</label>
+            <select id="l-status"><option>produced</option><option>scheduled</option><option>posted</option></select></div>
+        </div>
+        <label class="lbl" for="l-date">Date</label>
+        <input id="l-date" type="date">
+        <button id="l-add" class="btn primary block" type="button">Add to log</button>
+      </details>
+    </section>
+  </main>
+
+  <nav class="tabs" aria-label="Studio sections">
+    <button data-view="create" class="on"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Create</button>
+    <button data-view="ideas"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.3 1 2.5h6c0-1.2.3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg>Ideas</button>
+    <button data-view="week"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Week</button>
+    <button data-view="log"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h9"/></svg>Log</button>
+  </nav>
+</div>
+
+<div id="busy" class="busy" hidden><div class="spin"></div><p id="busy-msg">Working…</p></div>
+<div id="toast" class="toast" role="status" hidden></div>
+
+<script>
+/* If the API ever moves to a subdomain, set it here, e.g. window.STUDIO_API = "https://studio-api.levicox.com/creativestudio/api"; */
+window.STUDIO_API = window.STUDIO_API || "/creativestudio/api";
+</script>
+<script src="studio.js"></script>
+</body>
+</html>
