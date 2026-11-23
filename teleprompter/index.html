@@ -55,7 +55,14 @@ textarea:focus{border-color:#45454c}
 #bar.dim{opacity:0;pointer-events:none}
 .ctl{display:flex;align-items:center;gap:10px}
 .ctl label{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.1em;width:46px;flex:none}
-.ctl input[type=range]{flex:1;accent-color:var(--acc)}
+.ctl input[type=range]{flex:1;min-width:0;height:44px;margin:0;background:transparent;-webkit-appearance:none;appearance:none;touch-action:pan-y}
+.ctl input[type=range]::-webkit-slider-runnable-track{height:10px;border-radius:5px;background:rgba(255,255,255,.22)}
+.ctl input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:36px;height:36px;margin-top:-13px;border-radius:50%;background:#fff;border:4px solid var(--acc)}
+.ctl input[type=range]::-moz-range-track{height:10px;border-radius:5px;background:rgba(255,255,255,.22)}
+.ctl input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:#fff;border:4px solid var(--acc)}
+.step{width:44px;height:44px;border-radius:50%;flex:none;padding:0;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);font-size:24px;line-height:1;display:grid;place-items:center}
+.step:active{background:var(--acc)}
+a.btn{text-decoration:none;display:inline-block;color:var(--tx)}
 .ctl .v{width:34px;text-align:right;font-variant-numeric:tabular-nums;font-size:13px;color:var(--mut)}
 .main{display:flex;gap:8px;align-items:center;justify-content:space-between}
 .pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:10px 14px;font-size:14px;white-space:nowrap}
@@ -117,8 +124,8 @@ a.cta{text-decoration:none;display:inline-block}
   <div id="toast" class="hidden"></div>
 
   <div id="bar">
-    <div class="ctl"><label>Speed</label><input type="range" id="speed" min="1" max="30" step="1"><span class="v" id="speedV"></span></div>
-    <div class="ctl"><label>Size</label><input type="range" id="size" min="24" max="96" step="2"><span class="v" id="sizeV"></span></div>
+    <div class="ctl"><label>Speed</label><button class="step" data-t="speed" data-d="-1" aria-label="Slower">−</button><input type="range" id="speed" min="1" max="30" step="1"><button class="step" data-t="speed" data-d="1" aria-label="Faster">+</button><span class="v" id="speedV"></span></div>
+    <div class="ctl"><label>Size</label><button class="step" data-t="size" data-d="-1" aria-label="Smaller">−</button><input type="range" id="size" min="24" max="96" step="4"><button class="step" data-t="size" data-d="1" aria-label="Bigger">+</button><span class="v" id="sizeV"></span></div>
     <div class="ctl" id="shadeRow"><label>Dim</label><input type="range" id="dim" min="0" max="90" step="5"><span class="v" id="dimV"></span></div>
     <div class="main">
       <button class="pill" id="mirrorBtn">Mirror</button>
@@ -134,7 +141,8 @@ a.cta{text-decoration:none;display:inline-block}
   <div style="font-weight:700;font-size:18px">Take saved</div>
   <video id="preview" controls playsinline></video>
   <div class="row" style="justify-content:center">
-    <a class="cta" id="dl" download="reel-take.webm">Download take</a>
+    <button class="cta" id="saveBtn">Save to Photos</button>
+    <a class="btn" id="dl" download="reel-take.webm">Download file</a>
     <button class="btn" id="doneClose">Back to prompter</button>
   </div>
   <div class="hint" id="dlHint"></div>
@@ -235,6 +243,13 @@ a.cta{text-decoration:none;display:inline-block}
     settings.size=+this.value;$('sizeV').textContent=this.value;textEl.style.fontSize=this.value+'px';
     layout();pos=frac*textEl.offsetHeight;apply();save();hideBarSoon();
   };
+  Array.prototype.forEach.call(document.querySelectorAll('.step'),function(b){
+    b.onclick=function(){
+      var el=$(b.dataset.t);var st=+el.step||1;
+      el.value=Math.max(+el.min,Math.min(+el.max,(+el.value)+(+b.dataset.d)*st));
+      el.oninput.call(el);
+    };
+  });
   $('dim').oninput=function(){settings.dim=+this.value;$('dimV').textContent=this.value;setDim();save()};
   $('mirrorBtn').onclick=function(){settings.mirror=!settings.mirror;setMirror();save()};
   $('restartBtn').onclick=function(){pause();pos=0;apply()};
@@ -274,7 +289,7 @@ a.cta{text-decoration:none;display:inline-block}
 
   function startCam(){
     if(!camSupported()){toast("Camera isn't available in this view. Open the standalone file or your own https page to record in-app — or just film with your camera app while this scrolls.");setCamUI(false);return Promise.resolve()}
-    return navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1080},height:{ideal:1920}},audio:{echoCancellation:true,noiseSuppression:true}})
+    return navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1080},height:{ideal:1920},aspectRatio:{ideal:9/16},frameRate:{ideal:30}},audio:{echoCancellation:true,noiseSuppression:true}})
       .then(function(s){stream=s;var v=$('cam');v.srcObject=s;v.classList.remove('hidden');v.play().catch(function(){});setCamUI(true)})
       .catch(function(err){
         toast("Camera blocked here ("+(err&&err.name||'error')+"). The teleprompter still works — film with your camera app, or open this file in your own browser tab to record in-app.");
@@ -308,21 +323,41 @@ a.cta{text-decoration:none;display:inline-block}
     });
   }
 
+  /* Always record a true 1080x1920 vertical file: draw the camera into a 9:16 canvas (cover-crop)
+     and record that, so a phone that hands back landscape frames still gives a vertical reel. */
+  var drawRaf=0, lastFile=null;
+  function makeRecStream(){
+    var cv=document.createElement('canvas');cv.width=1080;cv.height=1920;
+    if(!cv.captureStream)return stream;
+    var ctx=cv.getContext('2d'),vid=$('cam'),W=1080,H=1920;
+    ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);
+    (function draw(){
+      var vw=vid.videoWidth,vh=vid.videoHeight;
+      if(vw&&vh){var s=Math.max(W/vw,H/vh),dw=vw*s,dh=vh*s;ctx.drawImage(vid,(W-dw)/2,(H-dh)/2,dw,dh)}
+      drawRaf=requestAnimationFrame(draw);
+    })();
+    var out=cv.captureStream(30);
+    stream.getAudioTracks().forEach(function(t){out.addTrack(t)});
+    return out;
+  }
+
   function startRec(){
     if(!stream)return;
     $('bar').classList.add('dim');
     countdown(3).then(function(){
       chunks=[];var mime=pickMime();
-      try{recorder=new MediaRecorder(stream,mime?{mimeType:mime,videoBitsPerSecond:8e6}:undefined)}catch(e){toast('Recording not supported here.',4000);return}
+      try{recorder=new MediaRecorder(makeRecStream(),mime?{mimeType:mime,videoBitsPerSecond:8e6}:undefined)}catch(e){toast('Recording not supported here.',4000);return}
       recorder.ondataavailable=function(e){if(e.data&&e.data.size)chunks.push(e.data)};
       recorder.onstop=function(){
+        cancelAnimationFrame(drawRaf);
         clearInterval(timerI);$('timer').classList.remove('rec');$('recBtn').classList.remove('on');
         if(!chunks.length)return;
         var type=recorder.mimeType||'video/webm';var blob=new Blob(chunks,{type:type});
         var url=URL.createObjectURL(blob);var ext=type.indexOf('mp4')>-1?'mp4':'webm';
         var name=(active().title||'reel').replace(/[^\w\-]+/g,'-').toLowerCase()+'-take.'+ext;
+        try{lastFile=new File([blob],name,{type:type})}catch(e){lastFile=null}
         $('preview').src=url;$('dl').href=url;$('dl').download=name;
-        $('dlHint').textContent='If Download does nothing in this view, open the standalone file and record there. Your take is not stored anywhere else.';
+        $('dlHint').textContent='Tap Save to Photos, then choose "Save Video" in the share sheet. Your take isn’t stored anywhere else, so save it before closing.';
         $('done').classList.remove('hidden');
       };
       recorder.start(1000);recStart=Date.now();
@@ -333,6 +368,11 @@ a.cta{text-decoration:none;display:inline-block}
   }
   function stopRec(){if(recorder&&recorder.state!=='inactive'){recorder.stop()}pause()}
   $('recBtn').onclick=function(){(recorder&&recorder.state==='recording')?stopRec():startRec()};
+  $('saveBtn').onclick=function(){
+    if(lastFile&&navigator.canShare&&navigator.canShare({files:[lastFile]})){
+      navigator.share({files:[lastFile],title:'Reel take'}).catch(function(){});
+    }else{ $('dl').click(); $('dlHint').textContent='Your browser can’t open the share sheet, so the take was downloaded instead. Find it in your Files/Downloads and add it to Photos from there.' }
+  };
   $('doneClose').onclick=function(){$('done').classList.add('hidden');$('timer').textContent='0:00';$('preview').pause()};
 
   /* ---------- Navigation ---------- */
@@ -342,7 +382,7 @@ a.cta{text-decoration:none;display:inline-block}
     $('toast').classList.add('hidden');
     $('shadeRow').style.opacity=.4;
     if($('optCam').checked)startCam();
-    var el=document.documentElement;try{if(el.requestFullscreen)el.requestFullscreen().catch(function(){})}catch(e){}
+    var el=document.documentElement;try{if(el.requestFullscreen)el.requestFullscreen().then(function(){if(screen.orientation&&screen.orientation.lock)screen.orientation.lock('portrait').catch(function(){})}).catch(function(){})}catch(e){}
   }
   function exit(){
     pause();stopCam();clearInterval(timerI);
