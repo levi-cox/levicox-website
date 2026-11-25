@@ -438,7 +438,6 @@ details p{padding:0 0 18px;max-width:56ch}
 <input type="hidden" name="_subject" value="New coaching application from levicox.com">
 <input type="hidden" name="_template" value="table">
 <input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="_autoresponse" value="Thanks for applying for online coaching with Levi Cox Fitness. I read every application myself and I'll reply within 1 business day with your next step. I'm taking ten coaching clients to start, so if spots are full I'll tell you when one opens. Levi">
 <div class="form-msg" id="form-msg" role="alert" hidden></div>
 <div class="qnav"><button class="back" type="button" id="back" hidden>Back</button><button class="btn btn-hero" type="submit" id="send"><span id="send-t">Next</span><span class="arr" aria-hidden="true">→</span></button></div>
 </form>
@@ -503,15 +502,25 @@ details p{padding:0 0 18px;max-width:56ch}
     btn.classList.remove('is-busy');msg.hidden=false;
     msg.innerHTML="That didn't send. <a href=\""+mailto()+"\">Send these answers by email instead</a>, or reach me on <a href=\"https://wa.me/61404263024\">WhatsApp</a>.";
   }
-  function submit(){
-    btn.classList.add('is-busy');
+  function done(emailed){
+    if(!emailed){var p=ok.querySelector('p');if(p)p.textContent="Thanks for applying. I read every application myself and I'll reply within 1 business day with your next step."}
+    f.hidden=true;ok.hidden=false;ok.focus();
+  }
+  function viaFormsubmit(why){
     fetch('https://formsubmit.co/ajax/levicoxfitness@gmail.com',{method:'POST',headers:{'Accept':'application/json'},body:new FormData(f)})
       .then(function(r){return r.json().catch(function(){return {}}).then(function(j){return {ok:r.ok,status:r.status,j:j}})})
       .then(function(x){
-        if(!x.ok||x.j.success===false||x.j.success==='false'){fail(x.status+' '+(x.j.message||''));return}
-        f.hidden=true;ok.hidden=false;ok.focus();
+        if(!x.ok||x.j.success===false||x.j.success==='false'){fail(why+' | '+x.status+' '+(x.j.message||''));return}
+        done(false);
       })
-      .catch(fail);
+      .catch(function(e){fail(why+' | '+e)});
+  }
+  function submit(){
+    btn.classList.add('is-busy');
+    var d={};new FormData(f).forEach(function(v,k){if(k.charAt(0)!=='_'||k==='_honey')d[k]=String(v)});
+    fetch('https://app.levicox.com/api/public/coaching-apply',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
+      .then(function(r){if(r.ok)done(true);else viaFormsubmit('app '+r.status)})
+      .catch(function(e){viaFormsubmit('app '+e)});
   }
   function next(){if(!valid(steps[i]))return;if(i===N-1)submit();else go(i+1,true)}
   f.addEventListener('submit',function(e){e.preventDefault();next()});
